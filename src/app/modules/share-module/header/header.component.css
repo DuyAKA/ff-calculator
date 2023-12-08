@@ -1,0 +1,14 @@
+.header-container {
+display: flex;
+background-color: #90EE91;
+  }
+  
+  .header-container.mobile {
+    min-height: 15vh;
+  }
+  
+  .header-container.desktop-tablet {
+    min-height: 10vh;
+
+  }
+  

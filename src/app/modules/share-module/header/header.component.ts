@@ -14,7 +14,6 @@ export class HeaderComponent {
   constructor(private resizeSvc: ResizeService) {
     this.resizeSvc.onResize$.pipe(delay(0)).subscribe((x) => {
       this.size = x;
-      console.log(x);
     });
   }
 }

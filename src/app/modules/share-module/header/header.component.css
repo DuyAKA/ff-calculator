@@ -1,6 +1,7 @@
 .header-container {
-display: flex;
-background-color: #90EE91;
+  display: flex;
+  background-color: #90EE91;
+  align-items: center;
   }
   
   .header-container.mobile {
@@ -9,6 +10,11 @@ background-color: #90EE91;
   
   .header-container.desktop-tablet {
     min-height: 10vh;
+  }
 
+  .app-name{
+    font-size: 20px;
+    margin-left: 2vw;
+    font-weight: bold;
   }
   

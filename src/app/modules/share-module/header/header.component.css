@@ -3,18 +3,19 @@
   background-color: #90EE91;
   align-items: center;
   }
-  
+
   .header-container.mobile {
     min-height: 15vh;
   }
-  
+
   .header-container.desktop-tablet {
     min-height: 10vh;
   }
 
   .app-name{
-    font-size: 20px;
+    font-size: 30px;
     margin-left: 2vw;
     font-weight: bold;
+    font-family: sans-serif;
   }
-  
+

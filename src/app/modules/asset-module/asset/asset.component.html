@@ -1,27 +1,41 @@
 <div class="title-container">
   <h1>Assets</h1>
 </div>
+<div>
+  <form action="/" method="post">
+    <label>Begin of the Plan:</label>
+    <input type="number" required />
+
+    <label>End of the Plan:</label>
+    <input type="number" required />
+
+    <button type="submit">OK</button>
+  </form>
+</div>
 <div class="asset-container">
   <div class="left-side-container">
-    <form action="/" method="post">
-      <label>Begin of the Plan:</label>
-      <input type="number" required />
-
-      <label>End of the Plan:</label>
-      <input type="number" required />
-
-      <button type="submit">OK</button>
-    </form>
+    <div class="nav-tabs-container">
+      <mat-tab-group>
+        <mat-tab label="Liquid Investment">
+          <ng-template matTabContent>
+            <p>This is the content of Tab 1.</p>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Real Estate"></mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
+
   <div class="right-side-container">
-    <form action="/" method="post">
-      <label>Begin of the Plan:</label>
-      <input type="number" required />
-
-      <label>End of the Plan:</label>
-      <input type="number" required />
-
-      <button type="submit">OK</button>
-    </form>
+    <div class="nav-tabs-container">
+      <mat-tab-group>
+        <mat-tab label="Liability">
+          <ng-template matTabContent>
+            <p>This is the content of Tab 2.</p>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Provision"></mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
 </div>

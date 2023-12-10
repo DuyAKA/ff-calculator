@@ -29,7 +29,7 @@
 }
 
 form {
-  width: 100%;
+  width: 35%;
   margin: 20px;
 }
 
@@ -56,4 +56,17 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+.nav-tabs-container {
+  margin-bottom: 20px;
+}
+
+.mat-tab-label {
+  min-width: 0; /* Allow tabs to shrink */
+}
+
+.tab-content-container {
+  padding: 20px;
+  border: 1px solid #ccc;
 }

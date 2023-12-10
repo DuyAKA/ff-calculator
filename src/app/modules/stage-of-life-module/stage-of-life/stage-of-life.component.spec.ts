@@ -8,10 +8,9 @@ describe('StageOfLifeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StageOfLifeComponent]
-    })
-    .compileComponents();
-    
+      imports: [StageOfLifeComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(StageOfLifeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

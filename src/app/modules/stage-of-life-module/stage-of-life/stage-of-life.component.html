@@ -1,1 +1,117 @@
-<p>stage-of-life works!</p>
+<div class="title-container">
+  <h1>Stages Of Life</h1>
+</div>
+
+<div class="stages-container">
+  <div *ngIf="isFormOn" class="form-container">
+    <form
+      [formGroup]="stageInfoForm"
+      class="form-fields-container"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="section-title">
+        <p>Stage Info</p>
+      </div>
+      <div class="field-container">
+        <label>Stage's name:</label>
+        <input type="text" required formControlName="name" />
+      </div>
+      <div class="field-container">
+        <label>Description:</label>
+        <input type="text" required formControlName="description" />
+      </div>
+      <div class="length-container">
+        <div class="field-container">
+          <label>From age:</label>
+          <input type="number" required formControlName="fromAge" />
+        </div>
+        <div class="field-container">
+          <label>To age:</label>
+          <input type="number" required formControlName="toAge" />
+        </div>
+      </div>
+
+      <div class="section-title">
+        <p>Revenue Per Year</p>
+      </div>
+      <div class="revenue-container" formGroupName="revenue">
+        <div class="field-container">
+          <label>Net Salary:</label>
+          <input type="number" formControlName="netSalary" />
+        </div>
+        <div class="field-container">
+          <label>Capital Assets:</label>
+          <input type="number" formControlName="capitalAssets" />
+        </div>
+        <div class="field-container">
+          <label>Passive Income:</label>
+          <input type="number" formControlName="passiveIncome" />
+        </div>
+        <div class="field-container">
+          <label>Occasional Income:</label>
+          <input type="number" formControlName="occasionalIncome" />
+        </div>
+        <div class="field-container">
+          <label>Other Income:</label>
+          <input type="number" formControlName="otherIncome" />
+        </div>
+      </div>
+
+      <div class="section-title">
+        <p>Expenses Per Year</p>
+      </div>
+      <div class="expense-container" formGroupName="expense">
+        <div class="field-container">
+          <label>Living Cost Per Month:</label>
+          <input type="number" formControlName="livingCostPerMonth" />
+        </div>
+        <div class="field-container">
+          <label>Dependents:</label>
+          <input type="number" formControlName="dependents" />
+        </div>
+        <div class="field-container">
+          <label>Purchase Fund:</label>
+          <input type="number" formControlName="purchaseFund" />
+        </div>
+        <div class="field-container">
+          <label>Occasional Cost:</label>
+          <input type="number" formControlName="occasionalCost" />
+        </div>
+        <div class="field-container">
+          <label>Maintenance Cost:</label>
+          <input type="number" formControlName="maintenanceCost" />
+        </div>
+        <div class="field-container">
+          <label>Interest And Repayment:</label>
+          <input type="number" formControlName="interestAndRepayment" />
+        </div>
+        <div class="field-container">
+          <label>Other Expenses:</label>
+          <input type="number" formControlName="otherExpenses" />
+        </div>
+        <div class="field-container">
+          <label>Dependents:</label>
+          <input type="number" formControlName="dependents" />
+        </div>
+      </div>
+
+      <button type="submit">Submit</button>
+      <button>Remove stage</button>
+    </form>
+  </div>
+  <div class="button-container">
+    <button *ngIf="!isFormOn" (click)="addStage()">Add stage</button>
+  </div>
+
+  <div *ngFor="let stage of stages" class="stage-list">
+    <div class="stage-info-container">
+      <div class="stage-info-name">{{ stage.name }}</div>
+      <div>Description: {{ stage.description }}</div>
+      <div>Start age: {{ stage.fromAge }}</div>
+      <div>End age: {{ stage.toAge }}</div>
+      <div>Stage length: {{ stage.stageLength }}</div>
+      <div>Revenue: {{ stage.revenueModel.calculate() }}</div>
+      <div>Expenses: {{ stage.expensesModel.calculate() }}</div>
+    </div>
+  </div>
+</div>

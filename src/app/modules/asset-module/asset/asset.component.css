@@ -21,6 +21,7 @@
   background-color: #E5F6DF;
   border-radius: 10px;
   display: flex;
+  border:1px solid green;
 }
 
 .right-side-container{
@@ -28,6 +29,7 @@
   background-color: #E5F6DF;
   border-radius: 10px;
   display: flex;
+  border:1px solid green;
 }
 
 form {

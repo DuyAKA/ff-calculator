@@ -1,0 +1,78 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.stages-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-container {
+  width: 60vw;
+  background-color: #e5f6df;
+  border-radius: 10px;
+  border: 1px solid green;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.form-fields-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.field-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.length-container {
+  display: flex;
+  gap: 2vw;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.stage-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stage-info-container {
+  background-color: #e5f6df;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 50vw;
+}
+
+.stage-info-name {
+  font-weight: bold;
+}

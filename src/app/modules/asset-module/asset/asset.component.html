@@ -18,10 +18,51 @@
       <mat-tab-group>
         <mat-tab label="Liquid Investment">
           <ng-template matTabContent>
-            <p>This is the content of Tab 1.</p>
+            <div class="li-input-container">
+              <label>Cash</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Stock</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Bond</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Precious Metal</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Others</label>
+              <input type="number" />
+            </div>
           </ng-template>
         </mat-tab>
-        <mat-tab label="Real Estate"></mat-tab>
+
+        <mat-tab label="Real Estate">
+          <ng-template matTabContent>
+            <div class="li-input-container">
+              <label>Property Value (PV)</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Property Value Increase Rate (PVR)</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Others</label>
+              <input type="number" />
+            </div>
+          </ng-template>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </div>
@@ -31,7 +72,15 @@
       <mat-tab-group>
         <mat-tab label="Liability">
           <ng-template matTabContent>
-            <p>This is the content of Tab 2.</p>
+            <div class="li-input-container">
+              <label>Liability Value (LV)</label>
+              <input type="number" />
+            </div>
+
+            <div class="li-input-container">
+              <label>Liability Value Increase Rate (LVR)</label>
+              <input type="number" />
+            </div>
           </ng-template>
         </mat-tab>
         <mat-tab label="Provision"></mat-tab>

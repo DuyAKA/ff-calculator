@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { AssetsModel } from '../../../models/asset.model';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './asset.component.html',
   styleUrl: './asset.component.css',
 })
-export class AssetComponent {
+export class AssetComponent{
   constructor(private formBuilder: FormBuilder) {}
 
   assets!: AssetsModel;
@@ -68,4 +68,5 @@ export class AssetComponent {
 
     console.log(this.assets);
   }
+
 }

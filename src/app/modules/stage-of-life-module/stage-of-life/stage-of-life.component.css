@@ -76,3 +76,39 @@ textarea {
 .stage-info-name {
   font-weight: bold;
 }
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.submit-button,
+.remove-stage-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  text-align: center;
+  gap: 20px;
+}
+
+.remove-stage-button {
+  background-color: #ff6666;
+}
+
+.add-stage-button {
+  background-color: #f39c12;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-stage-button:hover {
+  background-color: #d68910;
+}

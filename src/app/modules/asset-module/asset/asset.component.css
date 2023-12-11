@@ -92,3 +92,19 @@ mat-tab {
   margin-bottom: 10px;
   margin-top: 15px;
 }
+
+.next-buttonpage1 {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-left: 1370px;
+}
+
+.next-buttonpage1:hover {
+  background-color: #2980b9;
+}

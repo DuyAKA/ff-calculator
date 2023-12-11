@@ -97,8 +97,6 @@ export class StageOfLifeComponent {
       );
 
       this.closeForm();
-
-      console.log(this.stages);
     }
   }
 }

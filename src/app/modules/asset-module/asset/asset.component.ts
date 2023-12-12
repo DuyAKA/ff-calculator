@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AssetsModel } from '../../../models/asset.model';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { setAssets } from '../../../services/data-transfer/actions/assets.actions';
 
 @Component({
   selector: 'app-asset',
@@ -8,9 +11,9 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrl: './asset.component.css',
 })
 export class AssetComponent {
-  constructor(private formBuilder: FormBuilder) {}
+  private store = inject(Store);
 
-  assets!: AssetsModel;
+  constructor(private formBuilder: FormBuilder) {}
 
   assetsForm = this.formBuilder.group({
     begin: [null, Validators.required],
@@ -48,24 +51,32 @@ export class AssetComponent {
 
       const planLength = end! - begin!;
 
-      this.assets = new AssetsModel({
-        begin,
-        end,
+      const assetsModel: AssetsModel = {
+        begin: begin || 0,
+        end: end || 0,
         planLength,
-        cash,
-        stock,
-        bond,
-        preciousMetal,
-        otherAssets,
-        propertyValue,
-        propertyValueIR,
-        otherRealEstate,
-        liablityValue,
-        liabilityValueIR,
-        provision,
-      } as Partial<AssetsModel>);
-    }
+        cash: cash || 0,
+        stock: stock || 0,
+        bond: bond || 0,
+        preciousMetal: preciousMetal || 0,
+        otherAssets: otherAssets || 0,
+        propertyValue: propertyValue || 0,
+        propertyValueIR: propertyValueIR || 0,
+        otherRealEstate: otherRealEstate || 0,
+        liablityValue: liablityValue || 0,
+        liabilityValueIR: liabilityValueIR || 0,
+        provision: provision || 0,
+      };
+      const assets$: Observable<AssetsModel> = this.store.select('assets');
 
-    console.log(this.assets);
+      assets$.subscribe((assets) => {
+        console.log(assets);
+      });
+
+      this.store.dispatch(setAssets({ assets: assetsModel }));
+      assets$.subscribe((assets) => {
+        console.log(assets);
+      });
+    }
   }
 }

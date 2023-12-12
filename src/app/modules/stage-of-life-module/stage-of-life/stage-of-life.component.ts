@@ -1,8 +1,12 @@
 import { StageModel } from '../../../models/stage.model';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ExpensesModel } from '../../../models/stage-expense.model';
 import { RevenueModel } from '../../../models/stage-revenue.model';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AssetsModel } from '../../../models/asset.model';
 
 @Component({
   selector: 'app-stage-of-life',
@@ -10,7 +14,18 @@ import { RevenueModel } from '../../../models/stage-revenue.model';
   styleUrls: ['./stage-of-life.component.css'],
 })
 export class StageOfLifeComponent {
-  constructor(private formBuilder: FormBuilder) {}
+  private store = inject(Store);
+
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+    this.assets$ = this.store.select('assets');
+  }
+  assets$!: Observable<AssetsModel>;
+
+  showAssets() {
+    this.assets$.subscribe((assets) => {
+      console.log(assets);
+    });
+  }
 
   isFormOn = false;
 
@@ -50,6 +65,24 @@ export class StageOfLifeComponent {
   }
 
   onSubmit() {
+    const missingFields: string[] = [];
+
+    if (!this.stageInfoForm.get('name')!.value) {
+      missingFields.push("Stage's name");
+    }
+
+    if (!this.stageInfoForm.get('description')!.value) {
+      missingFields.push('Description');
+    }
+
+    if (!this.stageInfoForm.get('fromAge')!.value) {
+      missingFields.push('From age');
+    }
+
+    if (!this.stageInfoForm.get('toAge')!.value) {
+      missingFields.push('To age');
+    }
+
     if (this.stageInfoForm.valid) {
       const name = this.stageInfoForm.value.name!;
       const description = this.stageInfoForm.value.description!;
@@ -97,6 +130,17 @@ export class StageOfLifeComponent {
       );
 
       this.closeForm();
+    } else {
+      const message = `Please fill in the following required fields: ${missingFields.join(
+        ', '
+      )}`;
+
+      const config: MatSnackBarConfig = {
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        duration: 5000,
+      };
+      this.snackBar.open(message, 'Close', config);
     }
   }
 }

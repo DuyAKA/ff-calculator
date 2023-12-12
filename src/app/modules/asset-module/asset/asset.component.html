@@ -13,7 +13,7 @@
       <input type="number" required formControlName="begin" />
 
       <label>End of the Plan:</label>
-      <input type="number" required ormControlName="end" />
+      <input type="number" required formControlName="end" />
     </div>
     <div class="asset-container">
       <div class="left-side-container">
@@ -101,83 +101,9 @@
     <button type="submit">OK</button>
   </form>
 </div>
-<div class="asset-container">
-  <div class="left-side-container">
-    <div class="nav-tabs-container">
-      <mat-tab-group>
-        <mat-tab label="Liquid Investment">
-          <ng-template matTabContent>
-            <div class="li-input-container">
-              <label>Cash</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Stock</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Bond</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Precious Metal</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Others</label>
-              <input type="number" />
-            </div>
-          </ng-template>
-        </mat-tab>
-
-        <mat-tab label="Real Estate">
-          <ng-template matTabContent>
-            <div class="li-input-container">
-              <label>Property Value (PV)</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Property Value Increase Rate (PVR)</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Others</label>
-              <input type="number" />
-            </div>
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-  </div>
-
-  <div class="right-side-container">
-    <div class="nav-tabs-container">
-      <mat-tab-group>
-        <mat-tab label="Liability">
-          <ng-template matTabContent>
-            <div class="li-input-container">
-              <label>Liability Value (LV)</label>
-              <input type="number" />
-            </div>
-
-            <div class="li-input-container">
-              <label>Liability Value Increase Rate (LVR)</label>
-              <input type="number" />
-            </div>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="Provision"></mat-tab>
-      </mat-tab-group>
-    </div>
-  </div>
-</div>
 
 <div>
-  <button class="next-buttonpage1">Next</button>
+  <a href="/stages">
+    <button class="next-buttonpage1">Next</button>
+  </a>
 </div>

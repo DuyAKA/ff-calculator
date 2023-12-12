@@ -43,6 +43,10 @@ textarea {
   align-items: stretch;
 }
 
+.required-label {
+  color: red;
+}
+
 .field-container {
   display: flex;
   flex-direction: column;

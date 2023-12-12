@@ -2,6 +2,8 @@
   <h1>Stages Of Life</h1>
 </div>
 
+<button (click)="showAssets()">a</button>
+
 <div class="stages-container">
   <div *ngIf="isFormOn" class="form-container">
     <form
@@ -13,20 +15,26 @@
         <p>Stage Info</p>
       </div>
       <div class="field-container">
-        <label>Stage's name:</label>
+        <label
+          >Stage's name: <span class="required-label">(required)</span></label
+        >
         <input type="text" required formControlName="name" />
       </div>
       <div class="field-container">
-        <label>Description:</label>
+        <label
+          >Description: <span class="required-label">(required)</span></label
+        >
         <input type="text" required formControlName="description" />
       </div>
       <div class="length-container">
         <div class="field-container">
-          <label>From age:</label>
+          <label
+            >From age: <span class="required-label">(required)</span></label
+          >
           <input type="number" required formControlName="fromAge" />
         </div>
         <div class="field-container">
-          <label>To age:</label>
+          <label>To age: <span class="required-label">(required)</span></label>
           <input type="number" required formControlName="toAge" />
         </div>
       </div>
@@ -96,13 +104,15 @@
       </div>
 
       <div class="button-group">
-      <button class="submit-button" type="submit">Submit</button>
-      <button class="remove-stage-button">Remove Stage</button>
+        <button class="submit-button" type="submit">Submit</button>
+        <button class="remove-stage-button">Remove Stage</button>
       </div>
     </form>
   </div>
   <div class="button-container">
-    <button *ngIf="!isFormOn" (click)="addStage()" class="add-stage-button">Add stage</button>
+    <button *ngIf="!isFormOn" (click)="addStage()" class="add-stage-button">
+      Add stage
+    </button>
   </div>
 
   <div *ngFor="let stage of stages" class="stage-list">

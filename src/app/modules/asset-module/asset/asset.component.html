@@ -10,12 +10,22 @@
   >
     <div class="plan-info-container">
       <label>Begin of the Plan:</label>
-      <input type="number" required formControlName="begin" />
+      <input
+        type="number"
+        required
+        formControlName="begin"
+        (focus)="clearControlValue('begin')"
+        (blur)="displayZero('begin')"
+      />
 
       <label>End of the Plan:</label>
-      <input type="number" required formControlName="end" />
-
-      <button type="submit">OK</button>
+      <input
+        type="number"
+        required
+        formControlName="end"
+        (focus)="clearControlValue('end')"
+        (blur)="displayZero('end')"
+      />
     </div>
     <div class="asset-container">
       <div class="left-side-container">
@@ -25,27 +35,52 @@
               <ng-template matTabContent>
                 <div class="li-input-container">
                   <label>Cash</label>
-                  <input type="number" formControlName="cash" />
+                  <input
+                    type="number"
+                    formControlName="cash"
+                    (focus)="clearControlValue('cash')"
+                    (blur)="displayZero('cash')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Stock</label>
-                  <input type="number" formControlName="stock" />
+                  <input
+                    type="number"
+                    formControlName="stock"
+                    (focus)="clearControlValue('stock')"
+                    (blur)="displayZero('stock')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Bond</label>
-                  <input type="number" formControlName="bond" />
+                  <input
+                    type="number"
+                    formControlName="bond"
+                    (focus)="clearControlValue('bond')"
+                    (blur)="displayZero('bond')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Precious Metal</label>
-                  <input type="number" formControlName="preciousMetal" />
+                  <input
+                    type="number"
+                    formControlName="preciousMetal"
+                    (focus)="clearControlValue('preciousMetal')"
+                    (blur)="displayZero('preciousMetal')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Others</label>
-                  <input type="number" formControlName="otherAssets" />
+                  <input
+                    type="number"
+                    formControlName="otherAssets"
+                    (focus)="clearControlValue('otherAssets')"
+                    (blur)="displayZero('otherAssets')"
+                  />
                 </div>
               </ng-template>
             </mat-tab>
@@ -54,17 +89,32 @@
               <ng-template matTabContent>
                 <div class="li-input-container">
                   <label>Property Value</label>
-                  <input type="number" formControlName="propertyValue" />
+                  <input
+                    type="number"
+                    formControlName="propertyValue"
+                    (focus)="clearControlValue('propertyValue')"
+                    (blur)="displayZero('propertyValue')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Property Value Increase Rate</label>
-                  <input type="number" formControlName="propertyValueIR" />
+                  <input
+                    type="number"
+                    formControlName="propertyValueIR"
+                    (focus)="clearControlValue('propertyValueIR')"
+                    (blur)="displayZero('propertyValueIR')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Others</label>
-                  <input type="number" formControlName="otherRealEstate" />
+                  <input
+                    type="number"
+                    formControlName="otherRealEstate"
+                    (focus)="clearControlValue('otherRealEstate')"
+                    (blur)="displayZero('otherRealEstate')"
+                  />
                 </div>
               </ng-template>
             </mat-tab>
@@ -79,12 +129,22 @@
               <ng-template matTabContent>
                 <div class="li-input-container">
                   <label>Liability Value</label>
-                  <input type="number" formControlName="liablityValue" />
+                  <input
+                    type="number"
+                    formControlName="liablityValue"
+                    (focus)="clearControlValue('liablityValue')"
+                    (blur)="displayZero('liablityValue')"
+                  />
                 </div>
 
                 <div class="li-input-container">
                   <label>Liability Value Increase Rate </label>
-                  <input type="number" formControlName="liabilityValueIR" />
+                  <input
+                    type="number"
+                    formControlName="liabilityValueIR"
+                    (focus)="clearControlValue('liabilityValueIR')"
+                    (blur)="displayZero('liabilityValueIR')"
+                  />
                 </div>
               </ng-template>
             </mat-tab>
@@ -92,7 +152,12 @@
               <ng-template matTabContent>
                 <div class="li-input-container">
                   <label>Liability Value</label>
-                  <input type="number" formControlName="provision" />
+                  <input
+                    type="number"
+                    formControlName="provision"
+                    (focus)="clearControlValue('provision')"
+                    (blur)="displayZero('provision')"
+                  />
                 </div>
               </ng-template>
             </mat-tab>
@@ -101,7 +166,14 @@
       </div>
     </div>
     <div>
-      <button class="next-buttonpage1">Next</button>
+      <button type="submit">Calculate</button>
+      <button
+        type="button"
+        (click)="onNextButtonClick()"
+        class="next-buttonpage1"
+      >
+        Next
+      </button>
     </div>
   </form>
 </div>

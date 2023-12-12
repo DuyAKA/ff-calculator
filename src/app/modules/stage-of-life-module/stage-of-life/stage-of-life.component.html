@@ -1,8 +1,9 @@
+<button *ngIf="!isFormOn" (click)="onBackButtonClick()" class="back-button">
+  Back
+</button>
 <div class="title-container">
   <h1>Stages Of Life</h1>
 </div>
-
-<button (click)="showAssets()">a</button>
 
 <div class="stages-container">
   <div *ngIf="isFormOn" class="form-container">
@@ -110,7 +111,7 @@
     </form>
   </div>
   <div class="button-container">
-    <button *ngIf="!isFormOn" (click)="addStage()" class="add-stage-button">
+    <button *ngIf="!isFormOn" (click)="addStageForm()" class="add-stage-button">
       Add stage
     </button>
   </div>

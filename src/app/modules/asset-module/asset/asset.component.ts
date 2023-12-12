@@ -1,37 +1,72 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AssetsModel } from '../../../models/asset.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { setAssets } from '../../../services/data-transfer/actions/assets.actions';
+import { Router } from '@angular/router';
+import { StageModel } from '../../../models/stage.model';
 
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
   styleUrl: './asset.component.css',
 })
-export class AssetComponent {
+export class AssetComponent implements OnInit {
   private store = inject(Store);
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    this.store.select('assets').subscribe((assets) => {
+      this.assets = assets;
+    });
 
-  assetsForm = this.formBuilder.group({
-    begin: [null, Validators.required],
-    end: [null, Validators.required],
-    cash: null,
-    stock: null,
-    bond: null,
-    preciousMetal: null,
-    otherAssets: null,
-    propertyValue: null,
-    propertyValueIR: null,
-    otherRealEstate: null,
-    liablityValue: null,
-    liabilityValueIR: null,
-    provision: null,
-  });
+    this.store.select('stages').subscribe((stages) => {
+      this.stages = stages;
+    });
+  }
+
+  stages!: StageModel[];
+  assets!: AssetsModel;
+  assetsForm: any;
+
+  onNextButtonClick(): void {
+    this.router.navigate(['/stages']);
+  }
+
+  clearControlValue(controlName: string) {
+    const control = this.assetsForm.get(controlName);
+    if (control.value === 0) {
+      control.setValue(null);
+    }
+  }
+
+  displayZero(controlName: string) {
+    const control = this.assetsForm.get(controlName);
+    if (control.value === null) {
+      control.setValue(0);
+    }
+  }
+
+  ngOnInit(): void {
+    this.assetsForm = this.formBuilder.group({
+      begin: [this.assets.begin, Validators.required],
+      end: [this.assets.end, Validators.required],
+      cash: this.assets.cash,
+      stock: this.assets.stock,
+      bond: this.assets.bond,
+      preciousMetal: this.assets.preciousMetal,
+      otherAssets: this.assets.otherAssets,
+      propertyValue: this.assets.propertyValue,
+      propertyValueIR: this.assets.propertyValueIR,
+      otherRealEstate: this.assets.otherRealEstate,
+      liablityValue: this.assets.liablityValue,
+      liabilityValueIR: this.assets.liabilityValueIR,
+      provision: this.assets.provision,
+    });
+  }
 
   onSubmit() {
+    console.log(this.stages);
     if (this.assetsForm.valid) {
       const {
         begin,
@@ -67,17 +102,8 @@ export class AssetComponent {
         liabilityValueIR: liabilityValueIR || 0,
         provision: provision || 0,
       };
-      const assets$: Observable<AssetsModel> = this.store.select('assets');
-
-      assets$.subscribe((assets) => {
-        console.log(assets);
-      });
 
       this.store.dispatch(setAssets({ assets: assetsModel }));
-
-      assets$.subscribe((assets) => {
-        console.log(assets);
-      });
     }
   }
 }

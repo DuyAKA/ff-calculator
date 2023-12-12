@@ -6,5 +6,5 @@ export const initialState: StageModel[] = [];
 
 export const stagesReducer = createReducer(
   initialState,
-  on(StagesActions.setStages, (_, { stages }) => stages)
+  on(StagesActions.addStage, (state, { stage }) => [...state, stage])
 );

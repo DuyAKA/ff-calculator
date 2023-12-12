@@ -22,7 +22,5 @@ export const initialState: AssetsModel = {
 
 export const assetsReducer = createReducer(
   initialState,
-  on(AssetsActions.setAssets, (state, { assets }) => {
-    return { ...state, assets };
-  })
+  on(AssetsActions.setAssets, (_, { assets }) => assets)
 );

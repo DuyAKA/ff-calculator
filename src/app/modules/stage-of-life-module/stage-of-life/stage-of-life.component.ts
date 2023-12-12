@@ -5,8 +5,8 @@ import { ExpensesModel } from '../../../models/stage-expense.model';
 import { RevenueModel } from '../../../models/stage-revenue.model';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AssetsModel } from '../../../models/asset.model';
+import { Router } from '@angular/router';
+import { addStage } from '../../../services/data-transfer/actions/stages.actions';
 
 @Component({
   selector: 'app-stage-of-life',
@@ -16,15 +16,18 @@ import { AssetsModel } from '../../../models/asset.model';
 export class StageOfLifeComponent {
   private store = inject(Store);
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
-    this.assets$ = this.store.select('assets');
-  }
-  assets$!: Observable<AssetsModel>;
-
-  showAssets() {
-    this.assets$.subscribe((assets) => {
-      console.log(assets);
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    this.store.select('stages').subscribe((stages) => {
+      this.stages = stages;
     });
+  }
+
+  onBackButtonClick(): void {
+    this.router.navigate(['/']);
   }
 
   isFormOn = false;
@@ -55,7 +58,7 @@ export class StageOfLifeComponent {
     }),
   });
 
-  addStage() {
+  addStageForm() {
     this.isFormOn = true;
   }
 
@@ -116,17 +119,19 @@ export class StageOfLifeComponent {
 
       const stageOfLife = revenue - expenses;
 
-      this.stages.push(
-        new StageModel({
-          name,
-          description,
-          fromAge,
-          toAge,
-          stageLength,
-          revenueModel,
-          expensesModel,
-          stageOfLife,
-        } as Partial<StageModel>)
+      this.store.dispatch(
+        addStage(
+          new StageModel({
+            name,
+            description,
+            fromAge,
+            toAge,
+            stageLength,
+            revenueModel,
+            expensesModel,
+            stageOfLife,
+          })
+        )
       );
 
       this.closeForm();

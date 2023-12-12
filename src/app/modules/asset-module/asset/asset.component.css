@@ -4,9 +4,12 @@
 
 .asset-container {
   display: flex;
-  flex-direction: row;
   margin: 0 5vw;
   justify-content: space-between;
+  gap: 20px;
+  margin-left: 250px;
+  width: 1000px;
+  height: 600px;
 }
 
 .title-container {
@@ -16,11 +19,12 @@
   font-size: 20px;
 }
 
+
 .left-side-container {
   width: 42.5vw;
   background-color: #e5f6df;
   border-radius: 10px;
-  display: flex;
+  display:inline;
   border: 1px solid green;
 }
 

@@ -74,6 +74,7 @@ export class AssetComponent {
       });
 
       this.store.dispatch(setAssets({ assets: assetsModel }));
+
       assets$.subscribe((assets) => {
         console.log(assets);
       });

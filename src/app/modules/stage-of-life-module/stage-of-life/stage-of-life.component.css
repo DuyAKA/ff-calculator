@@ -5,7 +5,7 @@
 
 .back-button{
   position: absolute;
-  background-color: #f39c12;
+  background-color: #3498db;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -15,12 +15,27 @@
   margin: 20px;
 }
 
+.next-button{
+  position: absolute;
+  right:0;
+  margin-top: -60px;
+  margin-right:20px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 .stages-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
+
 }
 
 .form-container {
@@ -28,7 +43,8 @@
   background-color: #e5f6df;
   border-radius: 10px;
   border: 1px solid green;
-  padding: 20px;
+  padding: 0 20px 10px 20px;
+  margin-bottom: 20px;
 }
 
 form {
@@ -45,7 +61,7 @@ select,
 textarea {
   width: 100%;
   padding: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
@@ -95,11 +111,12 @@ textarea {
 
 .button-group {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 2vw;
 }
 
 .submit-button,
-.remove-stage-button {
+.cancel-button {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -111,7 +128,7 @@ textarea {
   gap: 20px;
 }
 
-.remove-stage-button {
+.cancel-button {
   background-color: #ff6666;
 }
 

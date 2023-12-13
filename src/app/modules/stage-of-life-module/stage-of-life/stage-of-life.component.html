@@ -5,6 +5,10 @@
   <h1>Stages Of Life</h1>
 </div>
 
+<button *ngIf="!isFormOn" (click)="onNextButtonClick()" class="next-button">
+  Next
+</button>
+
 <div class="stages-container">
   <div *ngIf="isFormOn" class="form-container">
     <form
@@ -19,24 +23,48 @@
         <label
           >Stage's name: <span class="required-label">(required)</span></label
         >
-        <input type="text" required formControlName="name" />
+        <input
+          type="text"
+          required
+          formControlName="name"
+          (focus)="clearControlValue(stageInfoForm, 'name')"
+          (blur)="displayZero(stageInfoForm, 'name')"
+        />
       </div>
       <div class="field-container">
         <label
           >Description: <span class="required-label">(required)</span></label
         >
-        <input type="text" required formControlName="description" />
+        <input
+          type="text"
+          required
+          formControlName="description"
+          (focus)="clearControlValue(stageInfoForm, 'description')"
+          (blur)="displayZero(stageInfoForm, 'description')"
+        />
       </div>
       <div class="length-container">
         <div class="field-container">
           <label
             >From age: <span class="required-label">(required)</span></label
           >
-          <input type="number" required formControlName="fromAge" />
+          <input
+            type="number"
+            required
+            formControlName="fromAge"
+            (focus)="clearControlValue(stageInfoForm, 'fromAge')"
+            (blur)="displayZero(stageInfoForm, 'fromAge')"
+          />
         </div>
         <div class="field-container">
           <label>To age: <span class="required-label">(required)</span></label>
-          <input type="number" required formControlName="toAge" />
+          <input
+            type="number"
+            required
+            formControlName="toAge"
+            (focus)="clearControlValue(stageInfoForm, 'toAge')"
+            (blur)="displayZero(stageInfoForm, 'toAge')"
+          />
         </div>
       </div>
 
@@ -44,25 +72,55 @@
         <p>Revenue Per Year</p>
       </div>
       <div class="revenue-container" formGroupName="revenue">
-        <div class="field-container">
-          <label>Net Salary:</label>
-          <input type="number" formControlName="netSalary" />
+        <div class="length-container">
+          <div class="field-container">
+            <label>Net Salary:</label>
+            <input
+              type="number"
+              formControlName="netSalary"
+              (focus)="clearControlValue(revenueForm, 'netSalary')"
+              (blur)="displayZero(revenueForm, 'netSalary')"
+            />
+          </div>
+          <div class="field-container">
+            <label>Capital Assets:</label>
+            <input
+              type="number"
+              formControlName="capitalAssets"
+              (focus)="clearControlValue(revenueForm, 'capitalAssets')"
+              (blur)="displayZero(revenueForm, 'capitalAssets')"
+            />
+          </div>
         </div>
-        <div class="field-container">
-          <label>Capital Assets:</label>
-          <input type="number" formControlName="capitalAssets" />
-        </div>
-        <div class="field-container">
-          <label>Passive Income:</label>
-          <input type="number" formControlName="passiveIncome" />
-        </div>
-        <div class="field-container">
-          <label>Occasional Income:</label>
-          <input type="number" formControlName="occasionalIncome" />
+
+        <div class="length-container">
+          <div class="field-container">
+            <label>Passive Income:</label>
+            <input
+              type="number"
+              formControlName="passiveIncome"
+              (focus)="clearControlValue(revenueForm, 'passiveIncome')"
+              (blur)="displayZero(revenueForm, 'passiveIncome')"
+            />
+          </div>
+          <div class="field-container">
+            <label>Occasional Income:</label>
+            <input
+              type="number"
+              formControlName="occasionalIncome"
+              (focus)="clearControlValue(revenueForm, 'occasionalIncome')"
+              (blur)="displayZero(revenueForm, 'occasionalIncome')"
+            />
+          </div>
         </div>
         <div class="field-container">
           <label>Other Income:</label>
-          <input type="number" formControlName="otherIncome" />
+          <input
+            type="number"
+            formControlName="otherIncome"
+            (focus)="clearControlValue(revenueForm, 'otherIncome')"
+            (blur)="displayZero(revenueForm, 'otherIncome')"
+          />
         </div>
       </div>
 
@@ -70,43 +128,82 @@
         <p>Expenses Per Year</p>
       </div>
       <div class="expense-container" formGroupName="expense">
-        <div class="field-container">
-          <label>Living Cost Per Month:</label>
-          <input type="number" formControlName="livingCostPerMonth" />
+        <div class="length-container">
+          <div class="field-container">
+            <label>Living Cost Per Month:</label>
+            <input
+              type="number"
+              formControlName="livingCostPerMonth"
+              (focus)="clearControlValue(expenseForm, 'livingCostPerMonth')"
+              (blur)="displayZero(expenseForm, 'livingCostPerMonth')"
+            />
+          </div>
+          <div class="field-container">
+            <label>Dependents:</label>
+            <input
+              type="number"
+              formControlName="dependents"
+              (focus)="clearControlValue(expenseForm, 'dependents')"
+              (blur)="displayZero(expenseForm, 'dependents')"
+            />
+          </div>
         </div>
-        <div class="field-container">
-          <label>Dependents:</label>
-          <input type="number" formControlName="dependents" />
+        <div class="length-container">
+          <div class="field-container">
+            <label>Purchase Fund:</label>
+            <input
+              type="number"
+              formControlName="purchaseFund"
+              (focus)="clearControlValue(expenseForm, 'purchaseFund')"
+              (blur)="displayZero(expenseForm, 'purchaseFund')"
+            />
+          </div>
+          <div class="field-container">
+            <label>Occasional Cost:</label>
+            <input
+              type="number"
+              formControlName="occasionalCost"
+              (focus)="clearControlValue(expenseForm, 'occasionalCost')"
+              (blur)="displayZero(expenseForm, 'occasionalCost')"
+            />
+          </div>
         </div>
-        <div class="field-container">
-          <label>Purchase Fund:</label>
-          <input type="number" formControlName="purchaseFund" />
-        </div>
-        <div class="field-container">
-          <label>Occasional Cost:</label>
-          <input type="number" formControlName="occasionalCost" />
-        </div>
-        <div class="field-container">
-          <label>Maintenance Cost:</label>
-          <input type="number" formControlName="maintenanceCost" />
-        </div>
-        <div class="field-container">
-          <label>Interest And Repayment:</label>
-          <input type="number" formControlName="interestAndRepayment" />
+        <div class="length-container">
+          <div class="field-container">
+            <label>Maintenance Cost:</label>
+            <input
+              type="number"
+              formControlName="maintenanceCost"
+              (focus)="clearControlValue(expenseForm, 'maintenanceCost')"
+              (blur)="displayZero(expenseForm, 'maintenanceCost')"
+            />
+          </div>
+          <div class="field-container">
+            <label>Interest And Repayment:</label>
+            <input
+              type="number"
+              formControlName="interestAndRepayment"
+              (focus)="clearControlValue(expenseForm, 'interestAndRepayment')"
+              (blur)="displayZero(expenseForm, 'interestAndRepayment')"
+            />
+          </div>
         </div>
         <div class="field-container">
           <label>Other Expenses:</label>
-          <input type="number" formControlName="otherExpenses" />
-        </div>
-        <div class="field-container">
-          <label>Dependents:</label>
-          <input type="number" formControlName="dependents" />
+          <input
+            type="number"
+            formControlName="otherExpenses"
+            (focus)="clearControlValue(expenseForm, 'otherExpenses')"
+            (blur)="displayZero(expenseForm, 'otherExpenses')"
+          />
         </div>
       </div>
 
       <div class="button-group">
         <button class="submit-button" type="submit">Submit</button>
-        <button class="remove-stage-button">Remove Stage</button>
+        <button type="button" class="cancel-button" (click)="closeForm()">
+          Cancel
+        </button>
       </div>
     </form>
   </div>

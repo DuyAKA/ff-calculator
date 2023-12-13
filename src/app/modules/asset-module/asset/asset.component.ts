@@ -7,10 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { setAssets } from '../../../services/data-transfer/actions/assets.actions';
 import { Router } from '@angular/router';
-import { StageModel } from '../../../models/stage.model';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
@@ -27,16 +25,10 @@ export class AssetComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.store.select('assets').subscribe((assets) => {
-      const newLocal = this;
-      newLocal.assets = assets;
-    });
-
-    this.store.select('stages').subscribe((stages) => {
-      this.stages = stages;
+      this.assets = assets;
     });
   }
 
-  stages!: StageModel[];
   assets!: AssetsModel;
   assetsForm: any;
 
@@ -95,8 +87,6 @@ export class AssetComponent implements OnInit {
     }
 
     if (this.assetsForm.valid) {
-      console.log(this.stages);
-
       const {
         begin,
         end,

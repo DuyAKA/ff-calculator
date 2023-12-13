@@ -1,5 +1,11 @@
 import { StageModel } from '../../../models/stage.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Component, inject } from '@angular/core';
 import { ExpensesModel } from '../../../models/stage-expense.model';
 import { RevenueModel } from '../../../models/stage-revenue.model';
@@ -15,6 +21,9 @@ import { addStage } from '../../../services/data-transfer/actions/stages.actions
 })
 export class StageOfLifeComponent {
   private store = inject(Store);
+  stageInfoForm: any;
+  revenueForm: any;
+  expenseForm: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,36 +39,62 @@ export class StageOfLifeComponent {
     this.router.navigate(['/']);
   }
 
+  onNextButtonClick(): void {
+    this.router.navigate(['/result']);
+  }
+
+  clearControlValue(form: FormGroup, controlName: string) {
+    const control = form.get(controlName);
+    if (control!.value === 0) {
+      control!.setValue(null);
+    }
+  }
+
+  displayZero(form: FormGroup, controlName: string) {
+    const control = form.get(controlName);
+    if (control!.value === null) {
+      control!.setValue(0);
+    }
+  }
+
+  nonZeroValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    return value !== 0 ? null : { nonZero: true };
+  }
+
   isFormOn = false;
 
   stages: StageModel[] = [];
 
-  stageInfoForm = this.formBuilder.group({
-    name: [null, Validators.required],
-    description: [null, Validators.required],
-    fromAge: [null, Validators.required],
-    toAge: [null, Validators.required],
-    revenue: this.formBuilder.group({
-      netSalary: null,
-      capitalAssets: null,
-      passiveIncome: null,
-      occasionalIncome: null,
-      otherIncome: null,
-      dependents: null,
-    }),
-    expense: this.formBuilder.group({
-      livingCostPerMonth: null,
-      dependents: null,
-      purchaseFund: null,
-      occasionalCost: null,
-      maintenanceCost: null,
-      interestAndRepayment: null,
-      otherExpenses: null,
-    }),
-  });
-
   addStageForm() {
     this.isFormOn = true;
+
+    this.revenueForm = this.formBuilder.group({
+      netSalary: 0,
+      capitalAssets: 0,
+      passiveIncome: 0,
+      occasionalIncome: 0,
+      otherIncome: 0,
+      dependents: 0,
+    });
+
+    (this.expenseForm = this.formBuilder.group({
+      livingCostPerMonth: 0,
+      dependents: 0,
+      purchaseFund: 0,
+      occasionalCost: 0,
+      maintenanceCost: 0,
+      interestAndRepayment: 0,
+      otherExpenses: 0,
+    })),
+      (this.stageInfoForm = this.formBuilder.group({
+        name: [null, Validators.required],
+        description: [null, Validators.required],
+        fromAge: [0, [Validators.required, this.nonZeroValidator]],
+        toAge: [0, [Validators.required, this.nonZeroValidator]],
+        revenue: this.revenueForm,
+        expense: this.expenseForm,
+      }));
   }
 
   closeForm() {

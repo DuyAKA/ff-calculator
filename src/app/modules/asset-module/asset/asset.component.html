@@ -6,10 +6,13 @@
   <form
     [formGroup]="assetsForm"
     class="form-fields-container"
-    (ngSubmit)="onSubmit()"
+    (ngSubmit)="submitForm()"
   >
     <div class="plan-info-container">
-      <label>Begin of the Plan:</label>
+      <label
+        >Begin of the Plan:
+        <span class="required-label">(required)</span></label
+      >
       <input
         type="number"
         required
@@ -18,7 +21,9 @@
         (blur)="displayZero('begin')"
       />
 
-      <label>End of the Plan:</label>
+      <label
+        >End of the Plan: <span class="required-label">(required)</span></label
+      >
       <input
         type="number"
         required
@@ -166,14 +171,7 @@
       </div>
     </div>
     <div>
-      <button type="submit">Calculate</button>
-      <button
-        type="button"
-        (click)="onNextButtonClick()"
-        class="next-buttonpage1"
-      >
-        Next
-      </button>
+      <button type="submit" class="next-buttonpage1">Next</button>
     </div>
   </form>
 </div>

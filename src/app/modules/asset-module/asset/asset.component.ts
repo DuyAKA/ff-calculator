@@ -1,11 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AssetsModel } from '../../../models/asset.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { setAssets } from '../../../services/data-transfer/actions/assets.actions';
 import { Router } from '@angular/router';
 import { StageModel } from '../../../models/stage.model';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-asset',
@@ -15,9 +21,14 @@ import { StageModel } from '../../../models/stage.model';
 export class AssetComponent implements OnInit {
   private store = inject(Store);
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.store.select('assets').subscribe((assets) => {
-      this.assets = assets;
+      const newLocal = this;
+      newLocal.assets = assets;
     });
 
     this.store.select('stages').subscribe((stages) => {
@@ -28,10 +39,6 @@ export class AssetComponent implements OnInit {
   stages!: StageModel[];
   assets!: AssetsModel;
   assetsForm: any;
-
-  onNextButtonClick(): void {
-    this.router.navigate(['/stages']);
-  }
 
   clearControlValue(controlName: string) {
     const control = this.assetsForm.get(controlName);
@@ -47,10 +54,15 @@ export class AssetComponent implements OnInit {
     }
   }
 
+  nonZeroValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    return value !== 0 ? null : { nonZero: true };
+  }
+
   ngOnInit(): void {
     this.assetsForm = this.formBuilder.group({
-      begin: [this.assets.begin, Validators.required],
-      end: [this.assets.end, Validators.required],
+      begin: [this.assets.begin, [Validators.required, this.nonZeroValidator]],
+      end: [this.assets.end, [Validators.required, this.nonZeroValidator]],
       cash: this.assets.cash,
       stock: this.assets.stock,
       bond: this.assets.bond,
@@ -65,9 +77,26 @@ export class AssetComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    console.log(this.stages);
+  submitForm() {
+    const missingFields: string[] = [];
+
+    if (
+      !this.assetsForm.get('begin')!.value ||
+      this.assetsForm.get('begin')!.value === 0
+    ) {
+      missingFields.push('Begin of the Plan');
+    }
+
+    if (
+      !this.assetsForm.get('end')!.value ||
+      this.assetsForm.get('end')!.value === 0
+    ) {
+      missingFields.push('End of the Plan');
+    }
+
     if (this.assetsForm.valid) {
+      console.log(this.stages);
+
       const {
         begin,
         end,
@@ -104,6 +133,19 @@ export class AssetComponent implements OnInit {
       };
 
       this.store.dispatch(setAssets({ assets: assetsModel }));
+
+      this.router.navigate(['/stages']);
+    } else {
+      const message = `Please fill in the following required fields: ${missingFields.join(
+        ', '
+      )}`;
+
+      const config: MatSnackBarConfig = {
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        duration: 3000,
+      };
+      this.snackBar.open(message, 'Close', config);
     }
   }
 }

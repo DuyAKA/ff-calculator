@@ -12,6 +12,10 @@
   height: 600px;
 }
 
+.required-label {
+  color: red;
+}
+
 .title-container {
   display: flex;
   justify-content: center;

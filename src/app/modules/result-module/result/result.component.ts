@@ -61,4 +61,5 @@ export class ResultComponent implements OnInit {
       this.store.dispatch(setIndex({ index: indexModel }));
     }
   }
+  inputValue: number = 0;
 }

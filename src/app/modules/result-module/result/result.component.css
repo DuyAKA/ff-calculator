@@ -1,0 +1,43 @@
+.summary-title {
+  color: indianred;
+  margin-left: 32px;
+}
+
+.summary-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.right-items,
+.left-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-items {
+  margin-right: 600px;
+}
+
+.left-items {
+  margin-left: 30px;
+  align-items: flex-start;
+}
+
+.input-group {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.input-group label {
+  width: 150px;
+  margin-right: 40px;
+  white-space: nowrap;
+}
+
+.input-group input {
+  flex: 1;
+  margin-left: 40px;
+  background-color: lightsteelblue;
+}

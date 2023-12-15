@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  afterRender,
+  PLATFORM_ID,
+  Inject,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,6 +18,8 @@ import { IndexModel } from '../../../models/index.model';
 import { setIndex } from '../../../services/data-transfer/actions/index.actions';
 import { AssetsModel } from '../../../models/asset.model';
 import { StageModel } from '../../../models/stage.model';
+import * as Highcharts from 'highcharts';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-result',
@@ -23,7 +32,27 @@ export class ResultComponent implements OnInit {
   assets!: AssetsModel;
   stages: StageModel[] = [];
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  Highcharts: typeof Highcharts = Highcharts;
+  chartConstructor: string = 'chart';
+  chartOptions: Highcharts.Options = {
+    accessibility: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: [1, 2, 3],
+        type: 'line',
+      },
+    ],
+  };
+
+  isServer = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.store.select('assets').subscribe((assets) => {
       this.assets = assets;
     });
@@ -31,6 +60,8 @@ export class ResultComponent implements OnInit {
     this.store.select('stages').subscribe((stages) => {
       this.stages = stages;
     });
+
+    this.isServer = !isPlatformBrowser(platformId);
   }
 
   indexForm: any;

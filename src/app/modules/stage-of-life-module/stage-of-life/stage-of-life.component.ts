@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Component, inject } from '@angular/core';
@@ -12,8 +13,13 @@ import { RevenueModel } from '../../../models/stage-revenue.model';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { addStage } from '../../../services/data-transfer/actions/stages.actions';
+import {
+  addStage,
+  deleteStage,
+  editStage,
+} from '../../../services/data-transfer/actions/stages.actions';
 
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'app-stage-of-life',
   templateUrl: './stage-of-life.component.html',
@@ -24,6 +30,15 @@ export class StageOfLifeComponent {
   stageInfoForm: any;
   revenueForm: any;
   expenseForm: any;
+  isEdit = false;
+  editIndex: number = 0;
+
+  isFormOn = false;
+
+  stages: StageModel[] = [];
+
+  faEdit = faEdit;
+  faTrashAlt = faTrashAlt;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,9 +77,23 @@ export class StageOfLifeComponent {
     return value !== 0 ? null : { nonZero: true };
   }
 
-  isFormOn = false;
+  checkDuplicatedName() {
+    const isNameDuplicate = this.stages.some(
+      (existingStage) =>
+        existingStage.name.toLowerCase() ===
+        this.stageInfoForm.get('name')!.value.toLowerCase()
+    );
 
-  stages: StageModel[] = [];
+    return isNameDuplicate;
+  }
+
+  showInvalidInputSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
 
   addStageForm() {
     this.isFormOn = true;
@@ -88,10 +117,48 @@ export class StageOfLifeComponent {
       otherExpenses: 0,
     })),
       (this.stageInfoForm = this.formBuilder.group({
-        name: [null, Validators.required],
+        name: ['', Validators.required],
         description: [null, Validators.required],
         fromAge: [0, [Validators.required, this.nonZeroValidator]],
         toAge: [0, [Validators.required, this.nonZeroValidator]],
+        revenue: this.revenueForm,
+        expense: this.expenseForm,
+      }));
+  }
+
+  editStageForm(stageData: StageModel) {
+    this.isEdit = true;
+    this.isFormOn = true;
+    this.editIndex = this.stages.findIndex((existingStage) => {
+      return existingStage.name === stageData.name;
+    });
+
+    this.revenueForm = this.formBuilder.group({
+      netSalary: stageData.revenueModel.netSalary,
+      capitalAssets: stageData.revenueModel.capitalAssets,
+      passiveIncome: stageData.revenueModel.passiveIncome,
+      occasionalIncome: stageData.revenueModel.occasionalIncome,
+      dependents: stageData.revenueModel.dependents,
+      otherIncome: stageData.revenueModel.otherIncome,
+    });
+
+    (this.expenseForm = this.formBuilder.group({
+      livingCostPerMonth: stageData.expensesModel.livingCostPerMonth,
+      dependents: stageData.expensesModel.dependents,
+      purchaseFund: stageData.expensesModel.purchaseFund,
+      occasionalCost: stageData.expensesModel.occasionalCost,
+      maintenanceCost: stageData.expensesModel.maintenanceCost,
+      interestAndRepayment: stageData.expensesModel.interestAndRepayment,
+      otherExpenses: stageData.expensesModel.otherExpenses,
+    })),
+      (this.stageInfoForm = this.formBuilder.group({
+        name: [stageData.name, Validators.required],
+        description: [stageData.description, Validators.required],
+        fromAge: [
+          stageData.fromAge,
+          [Validators.required, this.nonZeroValidator],
+        ],
+        toAge: [stageData.toAge, [Validators.required, this.nonZeroValidator]],
         revenue: this.revenueForm,
         expense: this.expenseForm,
       }));
@@ -103,6 +170,13 @@ export class StageOfLifeComponent {
   }
 
   onSubmit() {
+    if (this.checkDuplicatedName()) {
+      this.showInvalidInputSnackBar(
+        'This name is already used. Choose another name.'
+      );
+      return;
+    }
+
     const missingFields: string[] = [];
 
     if (!this.stageInfoForm.get('name')!.value) {
@@ -127,6 +201,13 @@ export class StageOfLifeComponent {
       const fromAge: number = this.stageInfoForm.value.fromAge!;
       const toAge: number = this.stageInfoForm.value.toAge!;
       const stageLength: number = toAge - fromAge;
+
+      if (stageLength <= 0) {
+        this.showInvalidInputSnackBar(
+          'Please choose "To age" larger than "From age"'
+        );
+        return;
+      }
 
       const revenueModel = new RevenueModel({
         netSalary: this.stageInfoForm.value.revenue?.netSalary!,
@@ -154,20 +235,24 @@ export class StageOfLifeComponent {
 
       const stageOfLife = revenue - expenses;
 
+      const stageToProcess = new StageModel({
+        name,
+        description,
+        fromAge,
+        toAge,
+        stageLength,
+        revenueModel,
+        expensesModel,
+        stageOfLife,
+      });
+
       this.store.dispatch(
-        addStage(
-          new StageModel({
-            name,
-            description,
-            fromAge,
-            toAge,
-            stageLength,
-            revenueModel,
-            expensesModel,
-            stageOfLife,
-          })
-        )
+        this.isEdit
+          ? editStage({ stage: stageToProcess, editIndex: this.editIndex })
+          : addStage(stageToProcess)
       );
+
+      this.isEdit = false;
 
       this.closeForm();
     } else {
@@ -175,12 +260,15 @@ export class StageOfLifeComponent {
         ', '
       )}`;
 
-      const config: MatSnackBarConfig = {
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-        duration: 5000,
-      };
-      this.snackBar.open(message, 'Close', config);
+      this.showInvalidInputSnackBar(message);
     }
+  }
+
+  onDeleteButtonClick(stageToDelete: StageModel) {
+    const deleteIndex = this.stages.findIndex((existingStage) => {
+      return existingStage.name === stageToDelete.name;
+    });
+
+    this.store.dispatch(deleteStage({ index: deleteIndex }));
   }
 }

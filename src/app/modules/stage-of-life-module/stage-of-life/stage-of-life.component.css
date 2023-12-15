@@ -97,6 +97,17 @@ textarea {
   justify-content: center;
 }
 
+.button-container{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  transform: translateX(-70px);
+}
+
+.button-container button{
+  margin-left: 5px;
+}
+
 .stage-info-container {
   background-color: #e5f6df;
   padding: 20px;
@@ -145,3 +156,6 @@ textarea {
 .add-stage-button:hover {
   background-color: #d68910;
 }
+
+
+

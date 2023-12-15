@@ -207,16 +207,25 @@
       </div>
     </form>
   </div>
-  <div class="button-container">
-    <button *ngIf="!isFormOn" (click)="addStageForm()" class="add-stage-button">
-      Add stage
-    </button>
-  </div>
+  <button *ngIf="!isFormOn" (click)="addStageForm()" class="add-stage-button">
+    Add stage
+  </button>
 
   <div *ngFor="let stage of stages" class="stage-list">
+    <div class="button-container">
+      <button (click)="editStageForm(stage)" class="edit-button">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </button>
+      <button (click)="onDeleteButtonClick(stage)" class="delete-button">
+        <fa-icon [icon]="faTrashAlt"></fa-icon>
+      </button>
+    </div>
     <div class="stage-info-container">
       <div class="stage-info-name">{{ stage.name }}</div>
-      <div>Description: {{ stage.description }}</div>
+      <div>
+        Description:
+        {{ stage.description }}
+      </div>
       <div>Start age: {{ stage.fromAge }}</div>
       <div>End age: {{ stage.toAge }}</div>
       <div>Stage length: {{ stage.stageLength }}</div>

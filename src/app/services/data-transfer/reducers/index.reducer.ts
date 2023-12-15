@@ -8,7 +8,7 @@ export const initialState: IndexModel = {
   expectedInflationIR: 0,
 };
 
-export const assetsReducer = createReducer(
+export const indexReducer = createReducer(
   initialState,
   on(IndexAction.setIndex, (_, { index }) => index)
 );

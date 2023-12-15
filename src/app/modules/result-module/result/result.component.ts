@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IndexModel } from '../../../models/index.model';
 import { setIndex } from '../../../services/data-transfer/actions/index.actions';
+import { AssetsModel } from '../../../models/asset.model';
+import { StageModel } from '../../../models/stage.model';
 
 @Component({
   selector: 'app-result',
@@ -17,7 +19,20 @@ import { setIndex } from '../../../services/data-transfer/actions/index.actions'
 })
 export class ResultComponent implements OnInit {
   private store = inject(Store);
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+
+  assets!: AssetsModel;
+  stages: StageModel[] = [];
+
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    this.store.select('assets').subscribe((assets) => {
+      this.assets = assets;
+    });
+
+    this.store.select('stages').subscribe((stages) => {
+      this.stages = stages;
+    });
+  }
+
   indexForm: any;
 
   ngOnInit(): void {
@@ -61,5 +76,28 @@ export class ResultComponent implements OnInit {
       this.store.dispatch(setIndex({ index: indexModel }));
     }
   }
-  inputValue: number = 0;
+
+  calculateSavingPoints() {
+    const points: number[] = [];
+
+    this.stages.forEach((stage) => {
+      for (let i = 1; i <= stage.stageLength; i++) {
+        points.push(stage.revenueModel.calculate() * i);
+      }
+    });
+
+    console.log(points);
+  }
+
+  calculateSpendingPoints() {
+    const points: number[] = [];
+
+    this.stages.forEach((stage) => {
+      for (let i = 1; i <= stage.stageLength; i++) {
+        points.push(stage.expensesModel.calculate() * i);
+      }
+    });
+
+    console.log(points);
+  }
 }

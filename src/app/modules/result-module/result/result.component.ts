@@ -11,7 +11,6 @@ import { IndexModel } from '../../../models/index.model';
 import { setIndex } from '../../../services/data-transfer/actions/index.actions';
 import { AssetsModel } from '../../../models/asset.model';
 import { StageModel } from '../../../models/stage.model';
-import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-result',
@@ -103,31 +102,4 @@ export class ResultComponent implements OnInit {
     console.log(points);
     return points;
   }
-
-  ffChart = new Chart({
-    chart: {
-      type: 'line',
-    },
-    title: {
-      text: 'Linechart',
-    },
-    credits: {
-      enabled: false,
-    },
-    accessibility: {
-      enabled: false,
-    },
-    series: [
-      {
-        name: 'Consumer Capital',
-        type: 'spline',
-        data: this.calculateSpendingPoints(),
-      },
-      {
-        name: 'Saving Capital',
-        type: 'spline',
-        data: this.calculateSavingPoints(),
-      },
-    ],
-  });
 }

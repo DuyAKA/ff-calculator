@@ -4,6 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import { AssetModule } from './modules/asset-module/asset/asset.module';
 import { StageOfLifeModule } from './modules/stage-of-life-module/stage-of-life/stage-of-life.module';
 import { ShareModule } from './modules/share-module/share.module';
+import { ResultModule } from './modules/result-module/result/result.module';
+import { ChartModule } from 'angular-highcharts';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,7 @@ import { ShareModule } from './modules/share-module/share.module';
     RouterOutlet,
     AssetModule,
     StageOfLifeModule,
+    ResultModule,
     ShareModule,
   ],
   templateUrl: './app.component.html',

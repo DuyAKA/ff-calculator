@@ -87,6 +87,20 @@ export class StageOfLifeComponent {
     return isNameDuplicate;
   }
 
+  checkDuplicatedNameOnEdit(name: string): boolean {
+    const omitStages = this.stages.filter(
+      (existingStage) => existingStage.name !== name
+    );
+
+    const isNameDuplicate = omitStages.some(
+      (existingStage) =>
+        existingStage.name.toLowerCase() ===
+        this.stageInfoForm.get('name')!.value.toLowerCase()
+    );
+
+    return isNameDuplicate;
+  }
+
   showInvalidInputSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 3000,
@@ -170,7 +184,15 @@ export class StageOfLifeComponent {
   }
 
   onSubmit() {
-    if (this.checkDuplicatedName()) {
+    if (!this.isEdit && this.checkDuplicatedName()) {
+      this.showInvalidInputSnackBar(
+        'This name is already used. Choose another name.'
+      );
+      return;
+    } else if (
+      this.isEdit &&
+      this.checkDuplicatedNameOnEdit(this.stageInfoForm.name)
+    ) {
       this.showInvalidInputSnackBar(
         'This name is already used. Choose another name.'
       );
@@ -200,7 +222,7 @@ export class StageOfLifeComponent {
       const description = this.stageInfoForm.value.description!;
       const fromAge: number = this.stageInfoForm.value.fromAge!;
       const toAge: number = this.stageInfoForm.value.toAge!;
-      const stageLength: number = toAge - fromAge;
+      const stageLength: number = toAge - fromAge + 1;
 
       if (stageLength <= 0) {
         this.showInvalidInputSnackBar(

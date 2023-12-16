@@ -9,24 +9,30 @@ export const stagesReducer = createReducer(
   on(StagesActions.addStage, (state, { stage }) => [...state, stage]),
 
   on(StagesActions.editStage, (state, { stage, editIndex }) => {
-    console.log(editIndex);
     if (editIndex < 0 || editIndex >= state.length) {
       return state;
     }
 
+    console.log(stage);
+
     const updatedState = [...state];
     updatedState[editIndex] = stage;
+
+    const stageAffectedIndex = state.findIndex(
+      (stageToFind) => stageToFind.fromAge === state[editIndex].toAge
+    );
+
+    if (stageAffectedIndex !== -1) {
+      updatedState[stageAffectedIndex] = new StageModel({
+        ...state[stageAffectedIndex],
+        fromAge: stage.toAge,
+      });
+    }
 
     return updatedState;
   }),
 
-  on(StagesActions.deleteStage, (state, { index }) => {
-    if (index < 0 || index >= state.length) {
-      return state;
-    }
-
-    const updatedState = state.filter((_, i) => i !== index);
-
-    return updatedState;
+  on(StagesActions.deleteStage, () => {
+    return [];
   })
 );

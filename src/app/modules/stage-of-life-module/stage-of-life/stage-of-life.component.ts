@@ -20,6 +20,7 @@ import {
 } from '../../../services/data-transfer/actions/stages.actions';
 
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { AssetsModel } from '../../../models/asset.model';
 @Component({
   selector: 'app-stage-of-life',
   templateUrl: './stage-of-life.component.html',
@@ -35,10 +36,13 @@ export class StageOfLifeComponent {
 
   isFormOn = false;
 
+  assets!: AssetsModel;
   stages: StageModel[] = [];
 
   faEdit = faEdit;
   faTrashAlt = faTrashAlt;
+
+  fixedFromAge!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +52,29 @@ export class StageOfLifeComponent {
     this.store.select('stages').subscribe((stages) => {
       this.stages = stages;
     });
+
+    this.store.select('assets').subscribe((assets) => {
+      this.assets = assets;
+    });
+
+    if (this.stages.length === 0) {
+      this.fixedFromAge = this.assets.begin;
+    } else {
+      this.fixedFromAge = this.stages[this.stages.length - 1].toAge;
+    }
+  }
+
+  checkStagesLength(): boolean {
+    let sumLength = 0;
+    for (let i = 0; i < this.stages.length; i++) {
+      sumLength += this.stages[i].stageLength;
+    }
+
+    if (sumLength !== this.assets.planLength) {
+      return false;
+    }
+
+    return true;
   }
 
   onBackButtonClick(): void {
@@ -55,6 +82,12 @@ export class StageOfLifeComponent {
   }
 
   onNextButtonClick(): void {
+    if (this.fixedFromAge !== this.assets.end || !this.checkStagesLength()) {
+      this.showInvalidInputSnackBar(
+        "Please add enough stages to cover the plan's length."
+      );
+      return;
+    }
     this.router.navigate(['/result']);
   }
 
@@ -89,7 +122,7 @@ export class StageOfLifeComponent {
 
   checkDuplicatedNameOnEdit(name: string): boolean {
     const omitStages = this.stages.filter(
-      (existingStage) => existingStage.name !== name
+      (existingStage) => existingStage.name != name
     );
 
     const isNameDuplicate = omitStages.some(
@@ -133,7 +166,7 @@ export class StageOfLifeComponent {
       (this.stageInfoForm = this.formBuilder.group({
         name: ['', Validators.required],
         description: [null, Validators.required],
-        fromAge: [0, [Validators.required, this.nonZeroValidator]],
+        fromAge: [this.fixedFromAge, Validators.required],
         toAge: [0, [Validators.required, this.nonZeroValidator]],
         revenue: this.revenueForm,
         expense: this.expenseForm,
@@ -168,10 +201,7 @@ export class StageOfLifeComponent {
       (this.stageInfoForm = this.formBuilder.group({
         name: [stageData.name, Validators.required],
         description: [stageData.description, Validators.required],
-        fromAge: [
-          stageData.fromAge,
-          [Validators.required, this.nonZeroValidator],
-        ],
+        fromAge: [stageData.fromAge, [Validators.required]],
         toAge: [stageData.toAge, [Validators.required, this.nonZeroValidator]],
         revenue: this.revenueForm,
         expense: this.expenseForm,
@@ -191,7 +221,7 @@ export class StageOfLifeComponent {
       return;
     } else if (
       this.isEdit &&
-      this.checkDuplicatedNameOnEdit(this.stageInfoForm.name)
+      this.checkDuplicatedNameOnEdit(this.stageInfoForm.value.name)
     ) {
       this.showInvalidInputSnackBar(
         'This name is already used. Choose another name.'
@@ -222,7 +252,7 @@ export class StageOfLifeComponent {
       const description = this.stageInfoForm.value.description!;
       const fromAge: number = this.stageInfoForm.value.fromAge!;
       const toAge: number = this.stageInfoForm.value.toAge!;
-      const stageLength: number = toAge - fromAge + 1;
+      const stageLength: number = toAge - fromAge;
 
       if (stageLength <= 0) {
         this.showInvalidInputSnackBar(
@@ -268,11 +298,17 @@ export class StageOfLifeComponent {
         stageOfLife,
       });
 
-      this.store.dispatch(
-        this.isEdit
-          ? editStage({ stage: stageToProcess, editIndex: this.editIndex })
-          : addStage(stageToProcess)
-      );
+      if (this.isEdit) {
+        this.store.dispatch(
+          editStage({ stage: stageToProcess, editIndex: this.editIndex })
+        );
+        if (this.fixedFromAge < stageToProcess.toAge) {
+          this.fixedFromAge = stageToProcess.toAge;
+        }
+      } else {
+        this.store.dispatch(addStage(stageToProcess));
+        this.fixedFromAge = stageToProcess.toAge;
+      }
 
       this.isEdit = false;
 
@@ -286,11 +322,9 @@ export class StageOfLifeComponent {
     }
   }
 
-  onDeleteButtonClick(stageToDelete: StageModel) {
-    const deleteIndex = this.stages.findIndex((existingStage) => {
-      return existingStage.name === stageToDelete.name;
-    });
+  onDeleteButtonClick() {
+    this.fixedFromAge = this.assets.begin;
 
-    this.store.dispatch(deleteStage({ index: deleteIndex }));
+    this.store.dispatch(deleteStage());
   }
 }

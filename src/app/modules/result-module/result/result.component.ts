@@ -141,7 +141,7 @@ export class ResultComponent implements OnInit {
     let savingPreviousStage = 0;
 
     this.stages.forEach((stage) => {
-      for (let i = 1; i < stage.stageLength; i++) {
+      for (let i = 1; i < stage.stageLength + 1; i++) {
         points.push(savingPreviousStage + stage.revenueModel.calculate() * i);
 
         if (i === stage.stageLength - 1) {
@@ -159,7 +159,7 @@ export class ResultComponent implements OnInit {
     let spendingPreviousStage = 0;
 
     this.stages.forEach((stage) => {
-      for (let i = 1; i < stage.stageLength; i++) {
+      for (let i = 1; i < stage.stageLength + 1; i++) {
         points.push(
           spendingPreviousStage + stage.expensesModel.calculate() * i
         );

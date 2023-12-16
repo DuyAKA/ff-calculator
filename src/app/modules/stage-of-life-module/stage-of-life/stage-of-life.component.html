@@ -45,11 +45,10 @@
       </div>
       <div class="length-container">
         <div class="field-container">
-          <label
-            >From age: <span class="required-label">(required)</span></label
-          >
+          <label>From age: </label>
           <input
             type="number"
+            readonly
             required
             formControlName="fromAge"
             (focus)="clearControlValue(stageInfoForm, 'fromAge')"
@@ -207,19 +206,20 @@
       </div>
     </form>
   </div>
-  <button *ngIf="!isFormOn" (click)="addStageForm()" class="add-stage-button">
-    Add stage
-  </button>
+  <div class="button-container">
+    <button *ngIf="!isFormOn" (click)="addStageForm()" class="add-stage-button">
+      Add stage
+    </button>
+    <button (click)="onDeleteButtonClick()" class="delete-button">
+      Delete all
+    </button>
+  </div>
 
   <div *ngFor="let stage of stages" class="stage-list">
-    <div class="button-container">
-      <button (click)="editStageForm(stage)" class="edit-button">
-        <fa-icon [icon]="faEdit"></fa-icon>
-      </button>
-      <button (click)="onDeleteButtonClick(stage)" class="delete-button">
-        <fa-icon [icon]="faTrashAlt"></fa-icon>
-      </button>
-    </div>
+    <button (click)="editStageForm(stage)" class="edit-button">
+      <fa-icon [icon]="faEdit"></fa-icon>
+    </button>
+
     <div class="stage-info-container">
       <div class="stage-info-name">{{ stage.name }}</div>
       <div>

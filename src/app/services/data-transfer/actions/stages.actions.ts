@@ -11,7 +11,4 @@ export const editStage = createAction(
   props<{ stage: StageModel; editIndex: number }>()
 );
 
-export const deleteStage = createAction(
-  '[Stages] Delete Stage',
-  props<{ index: number }>()
-);
+export const deleteStage = createAction('[Stages] Delete Stage');

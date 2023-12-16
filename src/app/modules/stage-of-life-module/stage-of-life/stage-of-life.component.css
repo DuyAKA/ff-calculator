@@ -3,7 +3,7 @@
   justify-content: center;
 }
 
-.back-button{
+.back-button {
   position: absolute;
   background-color: #3498db;
   color: #fff;
@@ -15,11 +15,11 @@
   margin: 20px;
 }
 
-.next-button{
+.next-button {
   position: absolute;
-  right:0;
+  right: 0;
   margin-top: -60px;
-  margin-right:20px;
+  margin-right: 20px;
   background-color: #3498db;
   color: #fff;
   padding: 10px 20px;
@@ -35,7 +35,6 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-
 }
 
 .form-container {
@@ -97,15 +96,15 @@ textarea {
   justify-content: center;
 }
 
-.button-container{
-  position: absolute;
+.button-container {
   display: flex;
-  flex-direction: row;
-  transform: translateX(-70px);
+  flex-direction: column;
+  gap: 15px;
 }
 
-.button-container button{
-  margin-left: 5px;
+.edit-button {
+  position: absolute;
+  transform: translateX(-50px);
 }
 
 .stage-info-container {
@@ -128,7 +127,7 @@ textarea {
 
 .submit-button,
 .cancel-button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -143,6 +142,7 @@ textarea {
   background-color: #ff6666;
 }
 
+.delete-button,
 .add-stage-button {
   background-color: #f39c12;
   color: #fff;
@@ -153,9 +153,10 @@ textarea {
   font-size: 16px;
 }
 
+.delete-button {
+  background-color: #ff6666;
+}
+
 .add-stage-button:hover {
   background-color: #d68910;
 }
-
-
-

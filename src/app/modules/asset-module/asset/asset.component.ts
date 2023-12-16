@@ -76,14 +76,14 @@ export class AssetComponent implements OnInit {
       !this.assetsForm.get('begin')!.value ||
       this.assetsForm.get('begin')!.value === 0
     ) {
-      missingFields.push('Begin of the Plan');
+      missingFields.push('Begin age of the plan');
     }
 
     if (
       !this.assetsForm.get('end')!.value ||
       this.assetsForm.get('end')!.value === 0
     ) {
-      missingFields.push('End of the Plan');
+      missingFields.push('End age of the plan');
     }
 
     if (this.assetsForm.valid) {
@@ -104,6 +104,13 @@ export class AssetComponent implements OnInit {
       } = this.assetsForm.value;
 
       const planLength = end! - begin!;
+
+      if (planLength <= 0) {
+        this.showInvalidInputSnackBar(
+          'Please choose "Begin age" larger than "End age"'
+        );
+        return;
+      }
 
       const assetsModel: AssetsModel = {
         begin: begin || 0,
@@ -130,12 +137,15 @@ export class AssetComponent implements OnInit {
         ', '
       )}`;
 
-      const config: MatSnackBarConfig = {
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-        duration: 3000,
-      };
-      this.snackBar.open(message, 'Close', config);
+      this.showInvalidInputSnackBar(message);
     }
+  }
+
+  showInvalidInputSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

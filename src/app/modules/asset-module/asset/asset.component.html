@@ -6,8 +6,8 @@
   >
     <div class="plan-info-container">
       <label
-        >Begin age of the Plan:
-        <span class="required-label">(required)</span></label
+        >Begin Age of The Plan:
+        <span class="required-label">(Required)</span></label
       >
       <input
         type="number"
@@ -18,8 +18,8 @@
       />
 
       <label
-        >End age of the Plan:
-        <span class="required-label">(required)</span></label
+        >End Age of The Plan:
+        <span class="required-label">(Required)</span></label
       >
       <input
         type="number"
@@ -29,7 +29,7 @@
         (blur)="displayZero('end')"
       />
 
-      <label>Expected inflation rate:</label>
+      <label>Expected Inflation Rate:</label>
       <input
         type="number"
         formControlName="expectedInflation"
@@ -37,7 +37,7 @@
         (blur)="displayZero('expectedInflation')"
       />
 
-      <label>Expected inflation increase rate: </label>
+      <label>Expected Inflation Increase Rate: </label>
       <input
         type="number"
         formControlName="expectedInflationIR"
@@ -45,13 +45,14 @@
         (blur)="displayZero('expectedInflationIR')"
       />
     </div>
+    <button type="submit" class="next-buttonpage1">Next</button>
 
     <div class="title-container">
       <h1>Assets</h1>
     </div>
 
     <div class="asset-container">
-      <div class="left-side-container">
+      <div class="side-container">
         <div class="nav-tabs-container">
           <mat-tab-group>
             <mat-tab label="Liquid Investment">
@@ -145,7 +146,7 @@
         </div>
       </div>
 
-      <div class="right-side-container">
+      <div class="side-container">
         <div class="nav-tabs-container">
           <mat-tab-group>
             <mat-tab label="Liability">
@@ -188,6 +189,5 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="next-buttonpage1">Next</button>
   </form>
 </div>

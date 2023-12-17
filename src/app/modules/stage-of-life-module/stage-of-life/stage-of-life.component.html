@@ -21,7 +21,7 @@
       </div>
       <div class="field-container">
         <label
-          >Stage's name: <span class="required-label">(required)</span></label
+          >Stage's Name: <span class="required-label">(Required)</span></label
         >
         <input
           type="text"
@@ -33,7 +33,7 @@
       </div>
       <div class="field-container">
         <label
-          >Description: <span class="required-label">(required)</span></label
+          >Description: <span class="required-label">(Required)</span></label
         >
         <input
           type="text"
@@ -45,18 +45,17 @@
       </div>
       <div class="length-container">
         <div class="field-container">
-          <label>From age: </label>
+          <label>From Age: </label>
           <input
+            class="fixed-input"
             type="number"
             readonly
             required
             formControlName="fromAge"
-            (focus)="clearControlValue(stageInfoForm, 'fromAge')"
-            (blur)="displayZero(stageInfoForm, 'fromAge')"
           />
         </div>
         <div class="field-container">
-          <label>To age: <span class="required-label">(required)</span></label>
+          <label>To Age: <span class="required-label">(Required)</span></label>
           <input
             type="number"
             required
@@ -215,22 +214,182 @@
     </button>
   </div>
 
-  <div *ngFor="let stage of stages" class="stage-list">
+  <div *ngFor="let stage of stages" class="stage-item">
     <button (click)="editStageForm(stage)" class="edit-button">
       <fa-icon [icon]="faEdit"></fa-icon>
     </button>
 
     <div class="stage-info-container">
-      <div class="stage-info-name">{{ stage.name }}</div>
-      <div>
-        Description:
-        {{ stage.description }}
+      <div class="stage-info-title">
+        <div class="stage-info-name">{{ stage.name }}</div>
+        <div style="font-style: italic; margin-bottom: 10px">
+          {{ stage.description }}
+        </div>
       </div>
-      <div>Start age: {{ stage.fromAge }}</div>
-      <div>End age: {{ stage.toAge }}</div>
-      <div>Stage length: {{ stage.stageLength }}</div>
-      <div>Revenue: {{ stage.revenueModel.calculate() }}</div>
-      <div>Expenses: {{ stage.expensesModel.calculate() }}</div>
+      <div class="input-group">
+        <label>Start age:</label>
+        <input readonly type="number" [value]="stage.fromAge" />
+      </div>
+      <div class="input-group">
+        <label>End age:</label>
+        <input readonly type="number" [value]="stage.toAge" />
+      </div>
+      <div class="input-group">
+        <label>Stage length:</label>
+        <input readonly type="number" [value]="stage.stageLength" />
+      </div>
+
+      <div class="input-group">
+        <div class="toggle-label">
+          <label>Revenue:</label>
+          <button class="toggle-button" (click)="toggleRevenueDetails(stage)">
+            <fa-icon
+              [icon]="
+                revenueDetailsVisibility[stage.name] ? faCaretUp : faCaretDown
+              "
+            ></fa-icon>
+          </button>
+        </div>
+
+        <input
+          readonly
+          type="number"
+          [value]="stage.revenueModel.calculate()"
+        />
+      </div>
+      <div
+        *ngIf="revenueDetailsVisibility[stage.name]"
+        class="toggle-item-container"
+      >
+        <div class="input-group">
+          <label>Net Salary:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.netSalary"
+          />
+        </div>
+        <div class="input-group">
+          <label>Capital Assets:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.capitalAssets"
+          />
+        </div>
+        <div class="input-group">
+          <label>Passive Income:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.passiveIncome"
+          />
+        </div>
+        <div class="input-group">
+          <label>Occasional Income:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.occasionalIncome"
+          />
+        </div>
+        <div class="input-group">
+          <label>Dependents:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.dependents"
+          />
+        </div>
+        <div class="input-group">
+          <label>Other Income:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.revenueModel.otherIncome"
+          />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="toggle-label">
+          <label>Expenses:</label>
+          <button class="toggle-button" (click)="toggleExpenseDetails(stage)">
+            <fa-icon
+              [icon]="
+                expenseDetailsVisibility[stage.name] ? faCaretUp : faCaretDown
+              "
+            ></fa-icon>
+          </button>
+        </div>
+        <input
+          readonly
+          type="number"
+          [value]="stage.expensesModel.calculate()"
+        />
+      </div>
+
+      <div
+        *ngIf="expenseDetailsVisibility[stage.name]"
+        class="toggle-item-container"
+      >
+        <div class="input-group">
+          <label>Living Cost Per Month:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.livingCostPerMonth"
+          />
+        </div>
+        <div class="input-group">
+          <label>Dependents:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.dependents"
+          />
+        </div>
+        <div class="input-group">
+          <label>Purchase Fund:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.purchaseFund"
+          />
+        </div>
+        <div class="input-group">
+          <label>Occasional Cost:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.occasionalCost"
+          />
+        </div>
+        <div class="input-group">
+          <label>Maintenance Cost:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.maintenanceCost"
+          />
+        </div>
+        <div class="input-group">
+          <label>Interest And Repayment:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.interestAndRepayment"
+          />
+        </div>
+        <div class="input-group">
+          <label>Other Expenses:</label>
+          <input
+            readonly
+            type="number"
+            [value]="stage.expensesModel.otherExpenses"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>

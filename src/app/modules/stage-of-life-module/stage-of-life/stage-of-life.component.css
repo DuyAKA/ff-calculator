@@ -90,10 +90,12 @@ textarea {
   font-size: 20px;
 }
 
-.stage-list {
+.stage-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 350px;
+  max-width: 80vw;
 }
 
 .button-container {
@@ -112,11 +114,12 @@ textarea {
   padding: 20px;
   border-radius: 10px;
   margin: 10px;
-  max-width: 50vw;
+  max-width: 70vw;
 }
 
 .stage-info-name {
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .button-group {
@@ -159,4 +162,49 @@ textarea {
 
 .add-stage-button:hover {
   background-color: #d68910;
+}
+
+.fixed-input {
+  background-color: lightgrey;
+}
+
+.toggle-item-container {
+  padding-left: 10px;
+  font-style: italic;
+}
+
+.input-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.input-group label {
+  height: 100%;
+  margin: 0;
+}
+
+.input-group input {
+  padding: 8px;
+  width: 200px;
+  min-width: 200px;
+  margin: 0;
+  direction: rtl;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.stage-info-title {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }

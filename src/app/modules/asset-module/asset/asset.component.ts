@@ -78,14 +78,14 @@ export class AssetComponent implements OnInit {
       !this.assetsForm.get('begin')!.value ||
       this.assetsForm.get('begin')!.value === 0
     ) {
-      missingFields.push('Begin age of the plan');
+      missingFields.push('Begin Age of The Plan');
     }
 
     if (
       !this.assetsForm.get('end')!.value ||
       this.assetsForm.get('end')!.value === 0
     ) {
-      missingFields.push('End age of the plan');
+      missingFields.push('End Age of The Plan');
     }
 
     if (this.assetsForm.valid) {
@@ -111,7 +111,7 @@ export class AssetComponent implements OnInit {
 
       if (planLength <= 0) {
         this.showInvalidInputSnackBar(
-          'Please choose "Begin age" larger than "End age"'
+          'Please choose "Begin Age" larger than "End Age"'
         );
         return;
       }

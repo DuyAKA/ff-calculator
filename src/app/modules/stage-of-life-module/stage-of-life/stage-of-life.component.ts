@@ -4,13 +4,12 @@ import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Component, inject } from '@angular/core';
 import { ExpensesModel } from '../../../models/stage-expense.model';
 import { RevenueModel } from '../../../models/stage-revenue.model';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import {
@@ -19,7 +18,8 @@ import {
   editStage,
 } from '../../../services/data-transfer/actions/stages.actions';
 
-import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { AssetsModel } from '../../../models/asset.model';
 @Component({
   selector: 'app-stage-of-life',
@@ -40,7 +40,22 @@ export class StageOfLifeComponent {
   stages: StageModel[] = [];
 
   faEdit = faEdit;
-  faTrashAlt = faTrashAlt;
+  faCaretDown = faCaretDown;
+  faCaretUp = faCaretUp;
+  revenueDetailsVisibility: { [key: string]: boolean } = {};
+  expenseDetailsVisibility: { [key: string]: boolean } = {};
+
+  toggleRevenueDetails(stage: StageModel): void {
+    const stageId = stage.name;
+    this.revenueDetailsVisibility[stageId] =
+      !this.revenueDetailsVisibility[stageId];
+  }
+
+  toggleExpenseDetails(stage: StageModel): void {
+    const stageId = stage.name;
+    this.expenseDetailsVisibility[stageId] =
+      !this.expenseDetailsVisibility[stageId];
+  }
 
   fixedFromAge!: number;
 

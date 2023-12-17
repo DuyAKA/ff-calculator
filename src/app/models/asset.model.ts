@@ -14,6 +14,9 @@ export class AssetsModel {
   liabilityValueIR!: number;
   provision!: number;
 
+  expectedInflation!: number;
+  expectedInflationIR!: number;
+
   public constructor(init?: Partial<AssetsModel>) {
     Object.assign(this, init);
   }

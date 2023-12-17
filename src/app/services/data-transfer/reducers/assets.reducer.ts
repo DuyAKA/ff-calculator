@@ -1,7 +1,6 @@
-import { createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as AssetsActions from '../actions/assets.actions';
 import { AssetsModel } from '../../../models/asset.model';
-import { State } from '.';
 
 export const initialState: AssetsModel = {
   begin: 0,
@@ -18,6 +17,8 @@ export const initialState: AssetsModel = {
   liablityValue: 0,
   liabilityValueIR: 0,
   provision: 0,
+  expectedInflation: 0,
+  expectedInflationIR: 0,
 };
 
 export const assetsReducer = createReducer(

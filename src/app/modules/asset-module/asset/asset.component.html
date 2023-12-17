@@ -1,7 +1,3 @@
-<div class="title-container">
-  <h1>Assets</h1>
-</div>
-
 <div class="form-container">
   <form
     [formGroup]="assetsForm"
@@ -32,7 +28,28 @@
         (focus)="clearControlValue('end')"
         (blur)="displayZero('end')"
       />
+
+      <label>Expected inflation rate:</label>
+      <input
+        type="number"
+        formControlName="expectedInflation"
+        (focus)="clearControlValue('expectedInflation')"
+        (blur)="displayZero('expectedInflation')"
+      />
+
+      <label>Expected inflation increase rate: </label>
+      <input
+        type="number"
+        formControlName="expectedInflationIR"
+        (focus)="clearControlValue('expectedInflationIR')"
+        (blur)="displayZero('expectedInflationIR')"
+      />
     </div>
+
+    <div class="title-container">
+      <h1>Assets</h1>
+    </div>
+
     <div class="asset-container">
       <div class="left-side-container">
         <div class="nav-tabs-container">
@@ -171,8 +188,6 @@
         </div>
       </div>
     </div>
-    <div>
-      <button type="submit" class="next-buttonpage1">Next</button>
-    </div>
+    <button type="submit" class="next-buttonpage1">Next</button>
   </form>
 </div>

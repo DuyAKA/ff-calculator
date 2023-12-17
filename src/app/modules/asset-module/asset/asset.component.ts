@@ -9,7 +9,7 @@ import {
 import { Store } from '@ngrx/store';
 import { setAssets } from '../../../services/data-transfer/actions/assets.actions';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-asset',
@@ -66,6 +66,8 @@ export class AssetComponent implements OnInit {
       liablityValue: this.assets.liablityValue,
       liabilityValueIR: this.assets.liabilityValueIR,
       provision: this.assets.provision,
+      expectedInflation: this.assets.expectedInflation,
+      expectedInflationIR: this.assets.expectedInflationIR,
     });
   }
 
@@ -101,6 +103,8 @@ export class AssetComponent implements OnInit {
         liablityValue,
         liabilityValueIR,
         provision,
+        expectedInflation,
+        expectedInflationIR,
       } = this.assetsForm.value;
 
       const planLength = end! - begin!;
@@ -127,6 +131,8 @@ export class AssetComponent implements OnInit {
         liablityValue: liablityValue || 0,
         liabilityValueIR: liabilityValueIR || 0,
         provision: provision || 0,
+        expectedInflation: expectedInflation || 0,
+        expectedInflationIR: expectedInflationIR || 0,
       };
 
       this.store.dispatch(setAssets({ assets: assetsModel }));

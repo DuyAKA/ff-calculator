@@ -121,37 +121,57 @@ export class ResultComponent implements OnInit {
 
   calculateSavingPoints(): number[] {
     const points: number[] = [];
-    let savingPreviousStage = 0;
+    const assetsValue = this.calculateAssets(this.assets);
+    let savingPreviousStage = assetsValue;
 
     this.stages.forEach((stage) => {
       for (let i = 1; i < stage.stageLength + 1; i++) {
-        points.push(savingPreviousStage + stage.revenueModel.calculate() * i);
+        points.push(
+          savingPreviousStage +
+            (stage.revenueModel.calculate() - stage.expensesModel.calculate()) *
+              i
+        );
 
-        if (i === stage.stageLength - 1) {
+        if (i === stage.stageLength) {
           savingPreviousStage = points[points.length - 1];
         }
       }
+      console.log(points);
     });
+
+    points.push(
+      savingPreviousStage +
+        this.stages[this.stages.length - 1].revenueModel.calculate()
+    );
 
     return points;
   }
 
   calculateSpendingPoints(): number[] {
     let points: number[] = [];
-    let spendingPreviousStage = 0;
+    let prevStageLength = 0;
+    let prevStep = 0;
 
-    this.stages.forEach((stage) => {
-      for (let i = 1; i < stage.stageLength + 1; i++) {
-        points.push(
-          spendingPreviousStage + stage.expensesModel.calculate() * i
-        );
+    points.push(0);
 
-        if (i === stage.stageLength - 1) {
-          spendingPreviousStage = points[points.length - 1];
-        }
+    for (let j = this.stages.length - 1; j >= 0; j--) {
+      for (let i = 1; i < this.stages[j].stageLength + 1; i++) {
+        let value =
+          prevStep +
+          this.stages[j].expensesModel.calculate() *
+            Math.pow(
+              1 + this.assets.expectedInflation / 100,
+              this.assets.planLength - (i + prevStageLength) + 1
+            );
+        points.push(value);
+
+        prevStep = value;
       }
-    });
+      prevStageLength += this.stages[j].stageLength;
+    }
+
     points = points.reverse();
+    console.log(points);
 
     return points;
   }
@@ -210,5 +230,34 @@ export class ResultComponent implements OnInit {
       }
       chart.redraw();
     }
+  }
+
+  calculateAssets(assetsToCalculate: AssetsModel): number {
+    let result = 0;
+
+    result +=
+      assetsToCalculate.cash +
+      assetsToCalculate.bond +
+      assetsToCalculate.preciousMetal +
+      assetsToCalculate.stock +
+      assetsToCalculate.otherAssets;
+
+    result +=
+      assetsToCalculate.propertyValue + assetsToCalculate.otherRealEstate;
+
+    result -= assetsToCalculate.liablityValue + assetsToCalculate.provision;
+    return result;
+  }
+
+  calculateAssetsIREachYear(assetsToCalculate: AssetsModel): number {
+    let result = 0;
+
+    result +=
+      (assetsToCalculate.propertyValue + assetsToCalculate.otherRealEstate) *
+      assetsToCalculate.propertyValueIR;
+
+    result -=
+      assetsToCalculate.liablityValue * assetsToCalculate.liabilityValueIR;
+    return result;
   }
 }

@@ -3,40 +3,32 @@
     <div class="left-container">
       <h2 class="summary-title">Summary</h2>
       <div class="summary-container">
-        <div class="input-group">
-          <label>Completed Years of Life</label>
-          <input readonly type="number" />
-        </div>
+        <form [formGroup]="resultsForm">
+          <div class="input-group">
+            <label>Plan Length</label>
+            <input readonly type="number" value="{{ assets.planLength }}" />
+          </div>
 
-        <div class="input-group">
-          <label>Years of Life Remaining</label>
-          <input readonly type="number" />
-        </div>
+          <div class="input-group">
+            <label>From Age</label>
+            <input readonly type="number" value="{{ assets.begin }}" />
+          </div>
 
-        <div class="input-group">
-          <label>Consumer Capital</label>
-          <input readonly type="number" />
-        </div>
+          <div class="input-group">
+            <label>To Age</label>
+            <input readonly type="number" value="{{ assets.end }}" />
+          </div>
 
-        <div class="input-group">
-          <label>Required savings capital</label>
-          <input readonly type="number" />
-        </div>
+          <div class="input-group">
+            <label>Financial Freedom at</label>
+            <input readonly type="number" formControlName="freedomPointX" />
+          </div>
 
-        <div class="input-group">
-          <label>Available savings capital</label>
-          <input readonly type="number" />
-        </div>
-
-        <div class="input-group">
-          <label>Supply balance(optimistic)</label>
-          <input readonly type="number" />
-        </div>
-
-        <div class="input-group">
-          <label>Supply balance(pessimistic)</label>
-          <input readonly type="number" />
-        </div>
+          <div class="input-group">
+            <label>Required saving to achieve FF</label>
+            <input readonly type="number" formControlName="freedomPointY" />
+          </div>
+        </form>
       </div>
     </div>
     <div class="chart-container">

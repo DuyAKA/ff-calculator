@@ -1,10 +1,5 @@
 import { Component, OnInit, inject, PLATFORM_ID, Inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AssetsModel } from '../../../models/asset.model';
@@ -26,6 +21,9 @@ export class ResultComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   chartConstructor: string = 'chart';
   chartOptions: Highcharts.Options = {};
+
+  financialFreedomPoint: any[] = [];
+  resultsForm: any;
 
   isServer = false;
 
@@ -87,36 +85,19 @@ export class ResultComponent implements OnInit {
     };
   }
 
-  indexForm: any;
-
   ngOnInit(): void {
-    this.indexForm = this.formBuilder.group({
-      expectedInflation: 0,
-      expectedInflactionIR: 0,
+    const point = this.calculateFFPoint(
+      this.calculateSavingPoints(),
+      this.calculateSpendingPoints()
+    );
+    this.resultsForm = this.formBuilder.group({
+      freedomPointX: point[0][0].toFixed(3),
+      freedomPointY: point[0][1].toFixed(3),
     });
   }
 
   onBackButtonClick(): void {
     this.router.navigate(['/stages']);
-  }
-
-  clearControlValue(controlName: string) {
-    const control = this.indexForm.get(controlName);
-    if (control.value === 0) {
-      control.setValue(null);
-    }
-  }
-
-  displayZero(controlName: string) {
-    const control = this.indexForm.get(controlName);
-    if (control.value === null) {
-      control.setValue(0);
-    }
-  }
-
-  nonZeroValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    return value !== 0 ? null : { nonZero: true };
   }
 
   calculateSavingPoints(): number[] {
@@ -136,7 +117,6 @@ export class ResultComponent implements OnInit {
           savingPreviousStage = points[points.length - 1];
         }
       }
-      console.log(points);
     });
 
     points.push(
@@ -171,7 +151,6 @@ export class ResultComponent implements OnInit {
     }
 
     points = points.reverse();
-    console.log(points);
 
     return points;
   }
@@ -210,10 +189,12 @@ export class ResultComponent implements OnInit {
     if (chart) {
       var s0 = chart.series[0].data;
       var s1 = chart.series[1].data;
+
       var s2 = chart.series[2];
       var n0 = s0!.length;
       var n1 = s1!.length;
       var i, j, isect;
+
       for (i = 1; i < n0; i++) {
         for (j = 1; j < n1; j++) {
           if (
@@ -225,11 +206,56 @@ export class ResultComponent implements OnInit {
             ))
           ) {
             s2.addPoint(isect, false, false);
+            this.financialFreedomPoint.push(isect);
           }
         }
       }
       chart.redraw();
     }
+  }
+
+  calculateFFPoint(s0: number[], s1: number[]): any {
+    const ageArray: number[] = [];
+
+    for (let age = this.assets.begin; age <= this.assets.end; age++) {
+      ageArray.push(age);
+    }
+
+    const combinedArrayS0: { x: number; y: number }[] = ageArray.map(
+      (x, index) => ({
+        x,
+        y: s0[index],
+      })
+    );
+
+    const combinedArrayS1: { x: number; y: number }[] = ageArray.map(
+      (x, index) => ({
+        x,
+        y: s1[index],
+      })
+    );
+
+    var s2: number[][] = [];
+    var n0 = s0!.length;
+    var n1 = s1!.length;
+    var i, j, isect;
+
+    for (i = 1; i < n0; i++) {
+      for (j = 1; j < n1; j++) {
+        if (
+          (isect = this.get_line_intersection(
+            combinedArrayS0[i - 1],
+            combinedArrayS0[i],
+            combinedArrayS1[j - 1],
+            combinedArrayS1[j]
+          ))
+        ) {
+          s2.push(isect);
+        }
+      }
+    }
+
+    return s2;
   }
 
   calculateAssets(assetsToCalculate: AssetsModel): number {

@@ -29,21 +29,24 @@
         (blur)="displayZero('end')"
       />
 
-      <label>Expected Inflation Rate:</label>
+      <label
+        >Expected Inflation Rate: <span class="required-label">(%)</span></label
+      >
       <input
         type="number"
         formControlName="expectedInflation"
         (focus)="clearControlValue('expectedInflation')"
         (blur)="displayZero('expectedInflation')"
+        value="%"
       />
 
-      <label>Expected Inflation Increase Rate: </label>
+      <!-- <label>Expected Inflation Increase Rate: </label>
       <input
         type="number"
         formControlName="expectedInflationIR"
         (focus)="clearControlValue('expectedInflationIR')"
         (blur)="displayZero('expectedInflationIR')"
-      />
+      /> -->
     </div>
     <button type="submit" class="next-buttonpage1">Next</button>
 

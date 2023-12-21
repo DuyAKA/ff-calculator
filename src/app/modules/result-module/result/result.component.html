@@ -36,10 +36,28 @@
         class="ffchart"
         *ngIf="!isServer"
         [Highcharts]="Highcharts"
-        [constructorType]="chartConstructor"
         [options]="chartOptions"
         (chartInstance)="onChartInstance($event)"
       ></highcharts-chart>
     </div>
+  </div>
+
+  <form class="inflation-form" [formGroup]="assetsForm" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+      <label
+        >Expected Inflation Rate: <span class="required-label">(%)</span></label
+      >
+      <input
+        type="number"
+        formControlName="expectedInflation"
+        (focus)="clearControlValue('expectedInflation')"
+        (blur)="displayZero('expectedInflation')"
+      />
+      <button class="submit-button" type="submit">Calculate</button>
+    </div>
+  </form>
+  <div class="button-container">
+    <button (click)="onBackToAssetsButtonClick()">Return to Assets</button>
+    <button (click)="onBackToStagesButtonClick()">Return to Stages</button>
   </div>
 </div>

@@ -54,3 +54,39 @@
   height: 400px;
   display: block;
 }
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.inflation-form{
+  margin-top: 50px;
+
+}
+
+.button-container button{
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button{
+  background-color: #f39c12;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.required-label {
+  color: red;
+}

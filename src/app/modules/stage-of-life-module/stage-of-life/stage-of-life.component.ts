@@ -317,13 +317,10 @@ export class StageOfLifeComponent {
         this.store.dispatch(
           editStage({ stage: stageToProcess, editIndex: this.editIndex })
         );
-        if (this.fixedFromAge < stageToProcess.toAge) {
-          this.fixedFromAge = stageToProcess.toAge;
-        }
       } else {
         this.store.dispatch(addStage(stageToProcess));
-        this.fixedFromAge = stageToProcess.toAge;
       }
+      this.fixedFromAge = stageToProcess.toAge;
 
       this.isEdit = false;
 

@@ -92,21 +92,18 @@ textarea {
 
 .stage-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   min-width: 350px;
   max-width: 80vw;
+  margin-top: 20px;
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 15px;
-}
-
-.edit-button {
-  position: absolute;
-  transform: translateX(-50px);
 }
 
 .stage-info-container {

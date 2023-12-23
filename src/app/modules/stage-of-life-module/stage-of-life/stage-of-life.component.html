@@ -214,10 +214,12 @@
     </button>
   </div>
 
-  <div *ngFor="let stage of stages" class="stage-item">
-    <button (click)="editStageForm(stage)" class="edit-button">
-      <fa-icon [icon]="faEdit"></fa-icon>
-    </button>
+  <div *ngFor="let stage of stages; let i = index" class="stage-item">
+    <div class="button-container">
+      <button (click)="editStageForm(stage)" class="edit-button">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </button>
+    </div>
 
     <div class="stage-info-container">
       <div class="stage-info-title">
@@ -391,5 +393,6 @@
         </div>
       </div>
     </div>
+    <div class="chart-container" [attr.id]="'chart-container-' + i"></div>
   </div>
 </div>

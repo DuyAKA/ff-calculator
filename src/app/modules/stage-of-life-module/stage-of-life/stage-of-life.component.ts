@@ -6,12 +6,14 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ExpensesModel } from '../../../models/stage-expense.model';
 import { RevenueModel } from '../../../models/stage-revenue.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import * as Highcharts from 'highcharts';
+
 import {
   addStage,
   deleteStage,
@@ -26,7 +28,7 @@ import { AssetsModel } from '../../../models/asset.model';
   templateUrl: './stage-of-life.component.html',
   styleUrls: ['./stage-of-life.component.css'],
 })
-export class StageOfLifeComponent {
+export class StageOfLifeComponent implements OnInit {
   private store = inject(Store);
   stageInfoForm: any;
   revenueForm: any;
@@ -76,6 +78,12 @@ export class StageOfLifeComponent {
       this.fixedFromAge = this.assets.begin;
     } else {
       this.fixedFromAge = this.stages[this.stages.length - 1].toAge;
+    }
+  }
+
+  ngOnInit(): void {
+    for (let i = 0; i < this.stages.length; i++) {
+      this.addColumnChart(i);
     }
   }
 
@@ -325,6 +333,8 @@ export class StageOfLifeComponent {
       this.isEdit = false;
 
       this.closeForm();
+
+      this.addColumnChart(this.stages.length - 1);
     } else {
       const message = `Please fill in the following required fields: ${missingFields.join(
         ', '
@@ -338,5 +348,59 @@ export class StageOfLifeComponent {
     this.fixedFromAge = this.assets.begin;
 
     this.store.dispatch(deleteStage());
+  }
+
+  addColumnChart(index: number) {
+    const containerId = 'chart-container-' + index;
+    const chartOptions: Highcharts.Options = {
+      chart: {
+        type: 'column',
+      },
+      accessibility: {
+        enabled: false,
+      },
+      title: {
+        text: this.stages[index].name + ' Chart',
+      },
+      xAxis: {
+        categories: ['Income', 'Expense', 'Earning'],
+        title: {
+          text: 'Income-Expense',
+        },
+      },
+      yAxis: {
+        title: {
+          text: 'Total Value',
+        },
+      },
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{point.y}',
+      },
+      legend: { enabled: false },
+      series: [
+        {
+          type: 'column',
+          data: [
+            {
+              y: this.stages[index].revenueModel.calculate(),
+              color: '#55BF3B',
+            },
+            {
+              y: this.stages[index].expensesModel.calculate(),
+              color: '#DF5353',
+            },
+            {
+              y: this.stages[index].stageOfLife,
+              color: '#7798BF',
+            },
+          ],
+        },
+      ],
+    };
+
+    setTimeout(() => {
+      Highcharts.chart(containerId, chartOptions);
+    });
   }
 }

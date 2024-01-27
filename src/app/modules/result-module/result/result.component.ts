@@ -269,7 +269,10 @@ export class ResultComponent implements OnInit {
       assetsToCalculate.otherAssets;
 
     result +=
-      assetsToCalculate.propertyValue + assetsToCalculate.otherRealEstate;
+      assetsToCalculate.residental +
+      assetsToCalculate.commercial +
+      assetsToCalculate.vacantLand +
+      assetsToCalculate.otherRealEstate;
 
     result -= assetsToCalculate.liablityValue + assetsToCalculate.provision;
     return result;
@@ -286,14 +289,13 @@ export class ResultComponent implements OnInit {
         bond: this.assets.bond,
         preciousMetal: this.assets.preciousMetal,
         otherAssets: this.assets.otherAssets,
-        propertyValue: this.assets.propertyValue,
-        propertyValueIR: this.assets.propertyValueIR,
+        residental: this.assets.residental,
+        commercial: this.assets.commercial,
+        vacantLand: this.assets.vacantLand,
         otherRealEstate: this.assets.otherRealEstate,
         liablityValue: this.assets.liablityValue,
-        liabilityValueIR: this.assets.liabilityValueIR,
         provision: this.assets.provision,
         expectedInflation: this.assetsForm.value.expectedInflation,
-        expectedInflationIR: this.assets.expectedInflationIR,
       };
 
       this.store.dispatch(setAssets({ assets: assetsModel }));

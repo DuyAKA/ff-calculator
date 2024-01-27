@@ -96,25 +96,32 @@
             <mat-tab label="Real Estate">
               <ng-template matTabContent>
                 <div class="li-input-container">
-                  <label>Property Value</label>
+                  <label>Residental</label>
                   <input
                     type="number"
-                    formControlName="propertyValue"
-                    (focus)="clearControlValue('propertyValue')"
-                    (blur)="displayZero('propertyValue')"
+                    formControlName="residental"
+                    (focus)="clearControlValue('residental')"
+                    (blur)="displayZero('residental')"
                   />
                 </div>
 
                 <div class="li-input-container">
-                  <label
-                    >Property Value Increase Rate
-                    <span class="required-label">(%)</span></label
-                  >
+                  <label>Commercial</label>
                   <input
                     type="number"
-                    formControlName="propertyValueIR"
-                    (focus)="clearControlValue('propertyValueIR')"
-                    (blur)="displayZero('propertyValueIR')"
+                    formControlName="commercial"
+                    (focus)="clearControlValue('commercial')"
+                    (blur)="displayZero('commercial')"
+                  />
+                </div>
+
+                <div class="li-input-container">
+                  <label>Vacant Land</label>
+                  <input
+                    type="number"
+                    formControlName="vacantLand"
+                    (focus)="clearControlValue('vacantLand')"
+                    (blur)="displayZero('vacantLand')"
                   />
                 </div>
 
@@ -145,19 +152,6 @@
                     formControlName="liablityValue"
                     (focus)="clearControlValue('liablityValue')"
                     (blur)="displayZero('liablityValue')"
-                  />
-                </div>
-
-                <div class="li-input-container">
-                  <label
-                    >Liability Value Increase Rate
-                    <span class="required-label">(%)</span></label
-                  >
-                  <input
-                    type="number"
-                    formControlName="liabilityValueIR"
-                    (focus)="clearControlValue('liabilityValueIR')"
-                    (blur)="displayZero('liabilityValueIR')"
                   />
                 </div>
               </ng-template>

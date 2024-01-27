@@ -11,14 +11,13 @@ export const initialState: AssetsModel = {
   bond: 0,
   preciousMetal: 0,
   otherAssets: 0,
-  propertyValue: 0,
-  propertyValueIR: 0,
+  residental: 0,
+  commercial: 0,
+  vacantLand: 0,
   otherRealEstate: 0,
   liablityValue: 0,
-  liabilityValueIR: 0,
   provision: 0,
   expectedInflation: 0,
-  expectedInflationIR: 0,
 };
 
 export const assetsReducer = createReducer(

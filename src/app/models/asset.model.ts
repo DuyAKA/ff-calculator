@@ -7,15 +7,13 @@ export class AssetsModel {
   bond!: number;
   preciousMetal!: number;
   otherAssets!: number;
-  propertyValue!: number;
-  propertyValueIR!: number;
+  residental!: number;
+  commercial!: number;
+  vacantLand!: number;
   otherRealEstate!: number;
   liablityValue!: number;
-  liabilityValueIR!: number;
   provision!: number;
-
   expectedInflation!: number;
-  expectedInflationIR!: number;
 
   public constructor(init?: Partial<AssetsModel>) {
     Object.assign(this, init);
